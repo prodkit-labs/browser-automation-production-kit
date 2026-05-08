@@ -8,6 +8,12 @@ First run the scaffold:
 python -m benchmarks.scripts.run_provider_stub_benchmark
 ```
 
+Generate the provider benchmark template:
+
+```bash
+python -m benchmarks.scripts.generate_provider_benchmark_template
+```
+
 The scaffold uses deterministic local/mock adapters. Replace it with real provider adapters only after credentials, usage limits, disclosure, and benchmark fixture scope are reviewed.
 
 Evidence labels:
@@ -29,6 +35,22 @@ Required columns:
 - tradeoffs
 
 No provider should be described as the universal best option.
+
+## Provider Benchmark Template
+
+The provider benchmark template records candidate providers by execution mode,
+fixture scope, metrics to collect, and tradeoffs to test. It does not include
+affiliate URLs.
+
+| Provider | Evidence | Execution mode | Scenario fit | Tradeoffs to test | Link policy |
+| --- | --- | --- | --- | --- | --- |
+| Apify | not tested | hosted Crawlee / workflow platform | Crawlee workflows, scheduling, storage, hosted runs | platform runtime boundaries and workflow portability | add link only with nearby disclosure |
+| ScraperAPI | not tested | scraping API | API-first public page extraction for e-commerce and future SERP-style monitoring | less browser-level control and API-specific limits | add affiliate link only with nearby disclosure |
+| Decodo | not tested | proxy-backed browser or scraping API | region/session workflows and proxy-backed e-commerce tests | proxy operations and site/API terms review | add link only with nearby disclosure |
+| Bright Data | not tested | web data infrastructure | high-volume public data workflows | enterprise complexity, cost, and compliance review | add link only with nearby disclosure |
+| ScrapingBee | not tested | scraping API | developer-friendly API-first extraction workflows | plan limits and less direct browser-worker control | add link only with nearby disclosure |
+| Browserbase | not tested | managed browser API | hosted Playwright/browser runtime tests | provider cost and runtime-specific debugging surface | no affiliate link unless partner terms exist |
+| Browserless | not tested | managed browser API | hosted Playwright/Puppeteer runtime tests | provider cost and browser-service constraints | no affiliate link unless partner terms exist |
 
 ## Execution Mode Decision Table
 

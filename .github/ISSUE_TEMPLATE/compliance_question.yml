@@ -1,0 +1,24 @@
+name: Compliance question
+description: Ask about boundaries, artifacts, public data, credentials, or provider use.
+title: "[Compliance]: "
+labels: ["area: compliance", "status: needs triage"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Describe the workflow, data source, artifact, or provider boundary you want to clarify.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Include only public, non-sensitive details. Do not paste credentials, cookies, private data, or protected content.
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Boundary check
+      options:
+        - label: This is not about credential harvesting, account automation, bypassing protected access, or private data extraction.
+          required: true

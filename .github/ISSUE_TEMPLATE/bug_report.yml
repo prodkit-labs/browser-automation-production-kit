@@ -1,0 +1,50 @@
+name: Bug report
+description: Report a reproducible problem in a workflow, fixture, adapter, or benchmark.
+title: "[Bug]: "
+labels: ["type: bug", "status: needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please include enough detail for maintainers to reproduce it without private credentials.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: List the exact commands, fixture, or example you ran.
+      placeholder: |
+        1. python -m ...
+        2. Open artifacts/...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Python version, package install command, and browser install details when relevant.
+      placeholder: |
+        OS:
+        Python:
+        Install command:
+        Browser:
+  - type: textarea
+    id: artifacts
+    attributes:
+      label: Relevant output
+      description: Paste small logs or summaries. Do not paste secrets, cookies, API keys, or private page content.
+      render: text
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed secrets, credentials, cookies, and private data from this report.
+          required: true

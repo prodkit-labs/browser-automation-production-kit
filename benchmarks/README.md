@@ -16,6 +16,15 @@ python -m benchmarks.scripts.run_provider_stub_benchmark
 
 This uses local and deterministic mock adapters only. It is for validating the comparison format before real provider credentials or external calls are introduced.
 
+Provider benchmark planning template:
+
+```bash
+python -m benchmarks.scripts.generate_provider_benchmark_template
+```
+
+The template writes candidate provider rows to `benchmarks/raw/provider_benchmark_template.csv`.
+Candidate rows are not recommendations and do not include affiliate URLs.
+
 Crawlee fixture run:
 
 ```bash

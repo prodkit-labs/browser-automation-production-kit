@@ -1,0 +1,29 @@
+name: Feature request
+description: Suggest a workflow, adapter, artifact, or production guide improvement.
+title: "[Feature]: "
+labels: ["type: enhancement", "status: needs triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Production problem
+      description: What production browser automation or public-data workflow problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed shape
+      description: Describe the example, adapter, benchmark, artifact, or documentation you imagine.
+    validations:
+      required: true
+  - type: textarea
+    id: local-path
+    attributes:
+      label: Local/open-source path
+      description: How should this remain runnable without paid services?
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Tradeoffs
+      description: What costs, maintenance risks, compliance boundaries, or provider limits should be documented?

@@ -15,6 +15,7 @@ from time import perf_counter
 from typing import Any
 
 from playwright.async_api import TimeoutError as PlaywrightTimeoutError
+from playwright.async_api import Error as PlaywrightError
 from playwright.async_api import async_playwright
 
 from prodkit_browser.artifacts import ArtifactWriter
@@ -64,6 +65,11 @@ class BrowserDebugServer:
 
                 if page.delay_ms:
                     time.sleep(page.delay_ms / 1000)
+
+                if page.scenario == "network_error":
+                    self.close_connection = True
+                    self.connection.close()
+                    return
 
                 body = page.html.encode("utf-8")
                 self.send_response(200)
@@ -145,6 +151,10 @@ async def run(
                 failure_reason = ""
                 status_code = 0
                 price = None
+                request_url = url
+                request_method = "GET"
+                request_resource_type = "document"
+                request_failure = ""
 
                 try:
                     response = await page.goto(
@@ -153,6 +163,11 @@ async def run(
                         timeout=navigation_timeout_ms,
                     )
                     status_code = response.status if response else 0
+                    if response:
+                        request = response.request
+                        request_url = request.url
+                        request_method = request.method
+                        request_resource_type = request.resource_type
                     price_text = await page.locator("[data-testid='price']").text_content(
                         timeout=selector_timeout_ms
                     )
@@ -166,6 +181,13 @@ async def run(
                     if debug_page.scenario != "timeout":
                         failure_reason = "selector_drift"
                     failure_reason = failure_reason or str(exc)
+                    request_failure = str(exc)
+                except PlaywrightError as exc:
+                    if debug_page.scenario == "network_error":
+                        failure_reason = "network_error"
+                    else:
+                        failure_reason = "browser_error"
+                    request_failure = str(exc)
 
                 html = await _safe_content(page)
                 html_artifact = writer.write_text(html_path, html)
@@ -179,6 +201,10 @@ async def run(
                         "url": url,
                         "ok": ok,
                         "failure_reason": failure_reason,
+                        "request_url": request_url,
+                        "request_method": request_method,
+                        "request_resource_type": request_resource_type,
+                        "request_failure": request_failure,
                         "latency_ms": round((perf_counter() - start) * 1000, 2),
                         "status_code": status_code,
                         "bytes_out": len(html.encode("utf-8")),

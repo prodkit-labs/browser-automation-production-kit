@@ -20,6 +20,13 @@
       "previous_price": 19.0,
       "delay_ms": 1200,
       "html": "<html><body><main><h1 data-testid=\"product-title\">Slow Product</h1><span data-testid=\"price\">$19.00</span><p>The page responds too slowly for the job budget.</p></main></body></html>"
+    },
+    {
+      "slug": "dropped-response-product",
+      "scenario": "network_error",
+      "previous_price": 29.0,
+      "delay_ms": 0,
+      "html": "<html><body><main><h1 data-testid=\"product-title\">Dropped Response Product</h1><span data-testid=\"price\">$29.00</span><p>The server drops the response before sending headers.</p></main></body></html>"
     }
   ]
 }

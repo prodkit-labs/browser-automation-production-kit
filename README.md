@@ -54,6 +54,7 @@ python -m prodkit_browser.jobs.docs_to_rag --fixture benchmarks/fixtures/docs_pa
 python -m prodkit_browser.jobs.ecommerce_price_monitor --fixture benchmarks/fixtures/ecommerce_pages.json
 python -m benchmarks.scripts.run_local_benchmark
 python -m benchmarks.scripts.run_provider_stub_benchmark
+python -m benchmarks.scripts.generate_provider_benchmark_template
 ```
 
 Outputs are written to `artifacts/` and `benchmarks/raw/`.
@@ -84,6 +85,7 @@ python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fi
 | Crawlee Python fixture run | `python -m prodkit_browser.jobs.crawlee_docs_to_rag --fixture benchmarks/fixtures/docs_pages.json` | Crawlee dataset plus normalized records |
 | Local benchmark | `python -m benchmarks.scripts.run_local_benchmark` | Raw CSV and summary metrics |
 | Provider scaffold benchmark | `python -m benchmarks.scripts.run_provider_stub_benchmark` | Provider comparison scaffold with evidence labels |
+| Provider benchmark template | `python -m benchmarks.scripts.generate_provider_benchmark_template` | Candidate provider rows without affiliate URLs |
 
 Example ecommerce output:
 
@@ -106,6 +108,7 @@ The Playwright debugger preserves the files you need when a browser job fails:
 artifacts/playwright-production-debugger/
   html/
     normal-product.html
+    dropped-response-product.html
     selector-drift-product.html
     slow-product.html
   screenshots/
@@ -119,11 +122,11 @@ Example failure summary:
 
 ```json
 {
-  "checked": 3,
+  "checked": 4,
   "passed": 1,
-  "failed": 2,
-  "screenshots": 2,
-  "failure_reasons": ["selector_drift", "timeout"]
+  "failed": 3,
+  "screenshots": 3,
+  "failure_reasons": ["network_error", "selector_drift", "timeout"]
 }
 ```
 
@@ -145,7 +148,7 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 
 - `examples/docs-to-rag`: crawl public documentation-style pages and emit normalized records.
 - `examples/ecommerce-price-monitor`: monitor fixture product pages, emit price changes, and report selector drift.
-- `examples/playwright-production-debugger`: run normal, selector drift, and timeout pages through Chromium and preserve debugging artifacts.
+- `examples/playwright-production-debugger`: run normal, selector drift, timeout, and network error pages through Chromium and preserve debugging artifacts.
 - `examples/playwright-selector-drift`: open fixture pages in Chromium, capture screenshots on selector drift, and report browser-run metrics.
 - `examples/serp-monitor`: planned SERP-style monitoring workflow with extra compliance boundaries.
 
@@ -165,6 +168,7 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 - [Deployment](production/deployment.md)
 - [Observability](production/observability.md)
 - [Cost control](production/cost-control.md)
+- [Provider options](production/providers.md)
 - [Provider comparison](production/provider-comparison.md)
 - [Disclosure policy](production/disclosure.md)
 

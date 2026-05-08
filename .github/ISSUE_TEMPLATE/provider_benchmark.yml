@@ -1,0 +1,55 @@
+name: Provider benchmark
+description: Propose a provider benchmark or provider category evaluation.
+title: "[Provider benchmark]: "
+labels: ["area: benchmarks", "area: provider-adapters", "status: needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Provider benchmarks must preserve raw data, evidence labels, tradeoffs, and nearby disclosure when public links are used.
+  - type: input
+    id: provider
+    attributes:
+      label: Provider or category
+      placeholder: "Example: Scraping API, managed browser API, proxy-backed browser"
+    validations:
+      required: true
+  - type: textarea
+    id: fixture-scope
+    attributes:
+      label: Fixture scope
+      description: Which fixtures or examples should this benchmark run against?
+      placeholder: "docs-to-RAG, e-commerce price monitor, Playwright production debugger..."
+    validations:
+      required: true
+  - type: textarea
+    id: metrics
+    attributes:
+      label: Metrics to collect
+      description: Include success rate, p95 latency, cost per 1k pages, artifact support, block rate, or other relevant signals.
+    validations:
+      required: true
+  - type: textarea
+    id: assumptions
+    attributes:
+      label: Assumptions and limits
+      description: Note rate limits, pricing assumptions, credentials, geography, runtime, and known tradeoffs.
+  - type: dropdown
+    id: evidence
+    attributes:
+      label: Evidence status
+      options:
+        - not tested
+        - estimated
+        - measured
+    validations:
+      required: true
+  - type: checkboxes
+    id: link-policy
+    attributes:
+      label: Link policy
+      options:
+        - label: This request does not require affiliate links in the README hero or install commands.
+          required: true
+        - label: Public provider links, if added later, should include nearby disclosure.
+          required: true

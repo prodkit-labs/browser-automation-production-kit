@@ -30,4 +30,10 @@ Run the provider-shaped benchmark scaffold:
 python -m benchmarks.scripts.run_provider_stub_benchmark
 ```
 
+Generate the provider benchmark planning template:
+
+```bash
+python -m benchmarks.scripts.generate_provider_benchmark_template
+```
+
 The mock adapters are not provider recommendations. They exist so the CSV format, evidence labels, and reporting workflow can be tested before adding real external integrations.
