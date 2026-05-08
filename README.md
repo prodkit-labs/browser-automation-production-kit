@@ -20,6 +20,7 @@ source .venv/bin/activate
 python -m pip install -e .
 python -m prodkit_browser.jobs.docs_to_rag --fixture benchmarks/fixtures/docs_pages.json
 python -m benchmarks.scripts.run_local_benchmark
+python -m benchmarks.scripts.run_provider_stub_benchmark
 ```
 
 Outputs are written to `artifacts/` and `benchmarks/raw/`.

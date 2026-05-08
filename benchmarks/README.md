@@ -8,6 +8,14 @@ Current local run:
 python -m benchmarks.scripts.run_local_benchmark
 ```
 
+Provider-shaped comparison scaffold:
+
+```bash
+python -m benchmarks.scripts.run_provider_stub_benchmark
+```
+
+This uses local and deterministic mock adapters only. It is for validating the comparison format before real provider credentials or external calls are introduced.
+
 Crawlee fixture run:
 
 ```bash
