@@ -89,32 +89,36 @@ Example ecommerce output:
 }
 ```
 
-Example artifact tree:
+Provider comparison scaffold included. Real provider reports should be added only with benchmark evidence and disclosure.
+
+## Artifact Preview
+
+The Playwright debugger preserves the files you need when a browser job fails:
 
 ```text
-artifacts/
-  ecommerce-price-monitor/
-    html/
-      field-notes-pack.html
-      travel-mug.html
-      canvas-tote.html
-    price_events.json
-    selector_drift.json
-    summary.json
-  playwright-selector-drift/
-    html/
-    screenshots/
-    price_events.json
-    selector_drift.json
-    summary.json
-  playwright-production-debugger/
-    html/
-    screenshots/
-    benchmark.csv
-    summary.json
+artifacts/playwright-production-debugger/
+  html/
+    normal-product.html
+    selector-drift-product.html
+    slow-product.html
+  screenshots/
+    selector-drift-product.png
+    slow-product.png
+  benchmark.csv
+  summary.json
 ```
 
-Provider comparison scaffold included. Real provider reports should be added only with benchmark evidence and disclosure.
+Example failure summary:
+
+```json
+{
+  "checked": 3,
+  "passed": 1,
+  "failed": 2,
+  "screenshots": 2,
+  "failure_reasons": ["selector_drift", "timeout"]
+}
+```
 
 ## Architecture
 
