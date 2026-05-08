@@ -39,7 +39,7 @@ No provider should be described as the universal best option.
 | Proxy-backed browser | region/session testing | 403/429 spikes | block rate, retry cost | when operations cost grows |
 | Managed browser API | reliability-sensitive workflows | provider cost | success rate, p95 latency, cost per 1k pages | when reliability matters |
 | Scraping API | commodity extraction | less control | success rate, latency | when speed matters |
-| SERP API | search result monitoring | terms review needed | quota, cost, freshness | when SERP is core data |
+| SERP API | search result monitoring | review site/API terms first | quota, cost, freshness | when SERP is core data |
 
 ## Scaffold Results
 

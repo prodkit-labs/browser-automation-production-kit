@@ -8,7 +8,7 @@
 
 ## Next
 
-- Add a Playwright-backed browser track for pages that need JavaScript execution.
+- Expand the Playwright-backed browser track with retry policies and network failure fixtures.
 - Add provider adapter interfaces without committing credentials or secrets.
 - Add SERP monitor only after compliance boundaries and fixtures are clear.
 

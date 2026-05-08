@@ -13,9 +13,11 @@ Guidelines:
 Run before opening a pull request:
 
 ```bash
-python -m pip install -e '.[dev,crawlee]'
+python -m pip install -e '.[dev,crawlee,browser]'
+python -m playwright install chromium
 python -m ruff check .
 python -m pytest
+python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fixtures/ecommerce_pages.json
 python -m benchmarks.scripts.run_local_benchmark
 python -m benchmarks.scripts.run_provider_stub_benchmark
 ```
