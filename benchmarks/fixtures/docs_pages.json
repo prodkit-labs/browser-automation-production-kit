@@ -1,0 +1,16 @@
+{
+  "pages": [
+    {
+      "url": "https://example.test/docs/getting-started",
+      "html": "<html><body><main><h1>Getting Started</h1><p>Install the package, configure a worker, and run your first browser automation job.</p></main></body></html>"
+    },
+    {
+      "url": "https://example.test/docs/production",
+      "html": "<html><body><main><h1>Production</h1><p>Track success rate, latency, retries, artifacts, and provider costs before scaling the job.</p></main></body></html>"
+    },
+    {
+      "url": "https://example.test/docs/debugging",
+      "html": "<html><body><main><h1>Debugging</h1><p>Save HTML, screenshots, logs, and request metadata when a run fails.</p></main></body></html>"
+    }
+  ]
+}

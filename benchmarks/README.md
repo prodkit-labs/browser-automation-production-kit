@@ -1,0 +1,28 @@
+# Benchmarks
+
+Benchmarks in this repo are generated from raw data, not hand-edited comparison tables.
+
+Current local run:
+
+```bash
+python -m benchmarks.scripts.run_local_benchmark
+```
+
+Crawlee fixture run:
+
+```bash
+python -m pip install -e '.[crawlee]'
+python -m prodkit_browser.jobs.crawlee_docs_to_rag --fixture benchmarks/fixtures/docs_pages.json
+```
+
+Tracked metrics:
+
+- `success_rate`
+- `p95_latency_ms`
+- `cost_per_1k_pages`
+- `captcha_or_block_rate`
+- `retry_rate`
+- `bytes_out`
+- `artifact_storage_mb`
+
+Provider comparison pages should label every number as `measured`, `estimated`, or `not tested`.
