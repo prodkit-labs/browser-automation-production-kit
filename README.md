@@ -5,13 +5,12 @@
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 ![Ruff](https://img.shields.io/badge/lint-ruff-46a2f1)
 
-A Python/Crawlee starter for turning browser automation scripts into production jobs.
+A Python/Crawlee/Playwright starter for turning browser automation scripts into production jobs.
 
 Most examples stop at "it works locally." This repo focuses on what breaks next: artifacts, retries, selector drift, metrics, provider handoffs, cost tracking, and compliance boundaries.
 
 This kit helps you answer:
 
-- Should this job run locally, through proxies, or through a managed browser API?
 - What failed: selector drift, 403/429, timeout, retry budget, or provider issue?
 - Should this job run locally, with Playwright, through proxies, or with a managed browser API?
 - What are the success rate, p95 latency, artifact size, and cost per 1k pages?
@@ -102,13 +101,17 @@ artifacts/
 
 Provider comparison scaffold included. Real provider reports should be added only with benchmark evidence and disclosure.
 
-## First Track
+## Architecture
 
-The first implementation track is `crawlee-python`. The local fixture mode keeps examples runnable without paid credentials, and the Crawlee track runs against the same fixture through a local HTTP server.
+The kit starts with deterministic local fixtures so every workflow can run without paid credentials.
 
-See:
+Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs, saved artifacts, structured metrics, and explicit compliance boundaries.
 
+### Tracks
+
+- Local fixture track
 - [Crawlee Python track](docs/crawlee-python-track.md)
+- Playwright browser track
 - [Provider adapters](docs/provider-adapters.md)
 - [Compliance boundaries](docs/compliance-boundaries.md)
 
