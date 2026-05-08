@@ -1,0 +1,25 @@
+{
+  "pages": [
+    {
+      "slug": "normal-product",
+      "scenario": "normal",
+      "previous_price": 42.0,
+      "delay_ms": 0,
+      "html": "<html><body><main><h1 data-testid=\"product-title\">Normal Product</h1><span data-testid=\"price\">$42.00</span><p>Rendered without drift.</p></main></body></html>"
+    },
+    {
+      "slug": "selector-drift-product",
+      "scenario": "selector_drift",
+      "previous_price": 39.0,
+      "delay_ms": 0,
+      "html": "<html><body><main><h1 data-testid=\"product-title\">Selector Drift Product</h1><div class=\"price-card\">$35.00</div><p>The price selector moved.</p></main></body></html>"
+    },
+    {
+      "slug": "slow-product",
+      "scenario": "timeout",
+      "previous_price": 19.0,
+      "delay_ms": 1200,
+      "html": "<html><body><main><h1 data-testid=\"product-title\">Slow Product</h1><span data-testid=\"price\">$19.00</span><p>The page responds too slowly for the job budget.</p></main></body></html>"
+    }
+  ]
+}

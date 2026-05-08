@@ -20,6 +20,7 @@ Ships today:
 
 - Local fixture runner
 - Crawlee Python fixture runner
+- Playwright production debugger
 - Playwright selector drift demo
 - E-commerce price monitor
 - Docs-to-RAG crawler
@@ -57,12 +58,21 @@ python -m playwright install chromium
 python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fixtures/ecommerce_pages.json
 ```
 
+To run the Playwright production debugger:
+
+```bash
+python -m pip install -e '.[browser]'
+python -m playwright install chromium
+python -m prodkit_browser.jobs.playwright_production_debugger --fixture benchmarks/fixtures/browser_debug_pages.json
+```
+
 ## What You Can Run Today
 
 | Workflow | Command | Output |
 | --- | --- | --- |
 | Docs to RAG | `python -m prodkit_browser.jobs.docs_to_rag --fixture benchmarks/fixtures/docs_pages.json` | normalized records and HTML artifacts |
 | E-commerce price monitor | `python -m prodkit_browser.jobs.ecommerce_price_monitor --fixture benchmarks/fixtures/ecommerce_pages.json` | price-change events and selector drift report |
+| Playwright production debugger | `python -m prodkit_browser.jobs.playwright_production_debugger --fixture benchmarks/fixtures/browser_debug_pages.json` | screenshot artifacts, failure reasons, and benchmark CSV |
 | Playwright selector drift | `python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fixtures/ecommerce_pages.json` | screenshots, HTML, metrics, and drift report |
 | Crawlee Python fixture run | `python -m prodkit_browser.jobs.crawlee_docs_to_rag --fixture benchmarks/fixtures/docs_pages.json` | Crawlee dataset plus normalized records |
 | Local benchmark | `python -m benchmarks.scripts.run_local_benchmark` | raw CSV and summary metrics |
@@ -97,6 +107,11 @@ artifacts/
     price_events.json
     selector_drift.json
     summary.json
+  playwright-production-debugger/
+    html/
+    screenshots/
+    benchmark.csv
+    summary.json
 ```
 
 Provider comparison scaffold included. Real provider reports should be added only with benchmark evidence and disclosure.
@@ -119,6 +134,7 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 
 - `examples/docs-to-rag`: crawl public documentation-style pages and emit normalized records.
 - `examples/ecommerce-price-monitor`: monitor fixture product pages, emit price changes, and report selector drift.
+- `examples/playwright-production-debugger`: run normal, selector drift, and timeout pages through Chromium and preserve debugging artifacts.
 - `examples/playwright-selector-drift`: open fixture pages in Chromium, capture screenshots on selector drift, and report browser-run metrics.
 - `examples/serp-monitor`: planned SERP-style monitoring workflow with extra compliance boundaries.
 

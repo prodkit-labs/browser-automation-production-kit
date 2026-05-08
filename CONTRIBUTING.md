@@ -18,6 +18,7 @@ python -m playwright install chromium
 python -m ruff check .
 python -m pytest
 python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fixtures/ecommerce_pages.json
+python -m prodkit_browser.jobs.playwright_production_debugger --fixture benchmarks/fixtures/browser_debug_pages.json
 python -m benchmarks.scripts.run_local_benchmark
 python -m benchmarks.scripts.run_provider_stub_benchmark
 ```

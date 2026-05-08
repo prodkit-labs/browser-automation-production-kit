@@ -8,7 +8,7 @@
 
 ## Next
 
-- Expand the Playwright-backed browser track with retry policies and network failure fixtures.
+- Expand the Playwright-backed browser track with retry policies and provider-backed comparison runs.
 - Add provider adapter interfaces without committing credentials or secrets.
 - Add SERP monitor only after compliance boundaries and fixtures are clear.
 
