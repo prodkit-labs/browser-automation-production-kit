@@ -1,0 +1,19 @@
+{
+  "pages": [
+    {
+      "url": "https://shop.example.test/products/field-notes-pack",
+      "previous_price": 39.0,
+      "html": "<html><body><main><h1 data-testid=\"product-title\">Field Notes Pack</h1><span data-testid=\"price\">$34.00</span><p class=\"stock\">In stock</p></main></body></html>"
+    },
+    {
+      "url": "https://shop.example.test/products/travel-mug",
+      "previous_price": 24.0,
+      "html": "<html><body><main><h1 data-testid=\"product-title\">Travel Mug</h1><span data-testid=\"price\">$24.00</span><p class=\"stock\">In stock</p></main></body></html>"
+    },
+    {
+      "url": "https://shop.example.test/products/canvas-tote",
+      "previous_price": 18.5,
+      "html": "<html><body><main><h1 data-testid=\"product-title\">Canvas Tote</h1><div class=\"price-moved\">Temporarily unavailable</div></main></body></html>"
+    }
+  ]
+}

@@ -29,3 +29,24 @@ Required columns:
 - tradeoffs
 
 No provider should be described as the universal best option.
+
+## Execution Mode Decision Table
+
+| Mode | Best for | Warning signs | Metrics to watch | When to upgrade |
+| --- | --- | --- | --- | --- |
+| Local HTTP / fixture | parser development | not real-world enough | parse accuracy, bytes out | before external tests |
+| Local browser | small scheduled jobs | crashes, timeouts | p95 latency, retry rate | when maintenance grows |
+| Proxy-backed browser | region/session testing | 403/429 spikes | block rate, retry cost | when operations cost grows |
+| Managed browser API | reliability-sensitive workflows | provider cost | success rate, p95 latency, cost per 1k pages | when reliability matters |
+| Scraping API | commodity extraction | less control | success rate, latency | when speed matters |
+| SERP API | search result monitoring | terms review needed | quota, cost, freshness | when SERP is core data |
+
+## Scaffold Results
+
+These are deterministic local/mock results that validate the report shape. They are not vendor recommendations.
+
+| Provider | Evidence | Execution mode | Success rate | p95 latency | Cost per 1k pages | Best fit | Tradeoffs |
+| --- | --- | --- | ---: | ---: | ---: | --- | --- |
+| local-fixture | measured | local fixture | 1.0 | 0 ms | $0.00 | parser and artifact development | does not represent live-site behavior |
+| mock-managed-browser | estimated | managed browser API | 1.0 | 420 ms | $3.25 | validating provider reporting fields | synthetic cost and latency only |
+| mock-provider-with-throttle | estimated | managed browser API with throttling | 0.6667 | 650 ms | $5.50 | testing failure reporting | intentionally simulates throttling |
