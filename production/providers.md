@@ -49,6 +49,7 @@ Each public provider evaluation should record:
 - fixture scope
 - setup steps
 - credential handling
+- adapter metadata and capabilities
 - rate limits
 - success rate
 - p95 latency

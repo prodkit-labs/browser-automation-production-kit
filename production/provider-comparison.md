@@ -42,6 +42,9 @@ The provider benchmark template records candidate providers by execution mode,
 fixture scope, metrics to collect, and tradeoffs to test. It does not include
 affiliate URLs.
 
+Real provider adapters should expose metadata, capabilities, and required
+environment variables before they are used in benchmark scripts.
+
 | Provider | Evidence | Execution mode | Scenario fit | Tradeoffs to test | Link policy |
 | --- | --- | --- | --- | --- | --- |
 | Apify | not tested | hosted Crawlee / workflow platform | Crawlee workflows, scheduling, storage, hosted runs | platform runtime boundaries and workflow portability | add link only with nearby disclosure |

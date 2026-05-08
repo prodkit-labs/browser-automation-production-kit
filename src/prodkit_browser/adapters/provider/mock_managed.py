@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from time import perf_counter
 
-from .base import FetchResult
+from .base import FetchResult, ProviderAdapterMetadata, ProviderCapabilities
 
 
 class MockManagedProviderAdapter:
@@ -17,6 +17,20 @@ class MockManagedProviderAdapter:
         fail_urls: set[str] | None = None,
     ) -> None:
         self.name = name
+        self.metadata = ProviderAdapterMetadata(
+            name=name,
+            category="managed browser API",
+            execution_mode="mock managed provider",
+            evidence="estimated",
+            notes=("deterministic mock for report shape validation",),
+        )
+        self.capabilities = ProviderCapabilities(
+            javascript_rendering=True,
+            screenshots=True,
+            html_artifacts=True,
+            sessions=True,
+            artifact_types=("html", "screenshot"),
+        )
         self._pages = pages
         self._latency_ms = latency_ms
         self._cost_per_page = cost_per_1k_pages_usd / 1000

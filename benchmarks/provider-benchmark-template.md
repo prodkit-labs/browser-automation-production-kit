@@ -29,6 +29,10 @@ benchmarks/raw/provider_benchmark_template.csv
   documented tradeoffs.
 - Do not rank providers until comparable benchmark data exists.
 - Keep the local and mock paths runnable without paid services.
+- Provider adapters should expose metadata and capabilities before a real
+  external call is added.
+- Required credentials must be listed as environment variable names and
+  validated at runtime, not stored in source files.
 
 ## Initial Candidate Categories
 

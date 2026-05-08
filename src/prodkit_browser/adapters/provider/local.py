@@ -2,11 +2,19 @@ from __future__ import annotations
 
 from time import perf_counter
 
-from .base import FetchResult
+from .base import FetchResult, ProviderAdapterMetadata, ProviderCapabilities
 
 
 class LocalFixtureAdapter:
     name = "local-fixture"
+    metadata = ProviderAdapterMetadata(
+        name=name,
+        category="baseline",
+        execution_mode="local HTTP / fixture",
+        evidence="measured",
+        notes=("fixture-only baseline; does not represent live-site behavior",),
+    )
+    capabilities = ProviderCapabilities(html_artifacts=True, artifact_types=("html",))
 
     def __init__(self, pages: dict[str, str]) -> None:
         self._pages = pages
