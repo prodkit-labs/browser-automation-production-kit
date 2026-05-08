@@ -9,6 +9,8 @@ A Python/Crawlee/Playwright starter for turning browser automation scripts into 
 
 Most examples stop at "it works locally." This repo focuses on what breaks next: artifacts, retries, selector drift, metrics, provider handoffs, cost tracking, and compliance boundaries.
 
+Current release: [v0.1.0](https://github.com/prodkit-labs/browser-automation-production-kit/releases/tag/v0.1.0) - fixture-first browser automation workflows with Playwright, Crawlee, artifacts, and benchmarks.
+
 This kit helps you answer:
 
 - What failed: selector drift, 403/429, timeout, retry budget, or provider issue?
@@ -31,9 +33,22 @@ Ships today:
 
 ## Quickstart
 
+Recommended first run:
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+python -m pip install -e '.[browser]'
+python -m playwright install chromium
+python -m prodkit_browser.jobs.playwright_production_debugger \
+  --fixture benchmarks/fixtures/browser_debug_pages.json
+```
+
+Outputs are written to `artifacts/playwright-production-debugger/`.
+
+For lightweight fixture-only runs:
+
+```bash
 python -m pip install -e .
 python -m prodkit_browser.jobs.docs_to_rag --fixture benchmarks/fixtures/docs_pages.json
 python -m prodkit_browser.jobs.ecommerce_price_monitor --fixture benchmarks/fixtures/ecommerce_pages.json
@@ -58,25 +73,17 @@ python -m playwright install chromium
 python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fixtures/ecommerce_pages.json
 ```
 
-To run the Playwright production debugger:
-
-```bash
-python -m pip install -e '.[browser]'
-python -m playwright install chromium
-python -m prodkit_browser.jobs.playwright_production_debugger --fixture benchmarks/fixtures/browser_debug_pages.json
-```
-
 ## What You Can Run Today
 
 | Workflow | Command | Output |
-| --- | --- | --- |
-| Docs to RAG | `python -m prodkit_browser.jobs.docs_to_rag --fixture benchmarks/fixtures/docs_pages.json` | normalized records and HTML artifacts |
-| E-commerce price monitor | `python -m prodkit_browser.jobs.ecommerce_price_monitor --fixture benchmarks/fixtures/ecommerce_pages.json` | price-change events and selector drift report |
-| Playwright production debugger | `python -m prodkit_browser.jobs.playwright_production_debugger --fixture benchmarks/fixtures/browser_debug_pages.json` | screenshot artifacts, failure reasons, and benchmark CSV |
-| Playwright selector drift | `python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fixtures/ecommerce_pages.json` | screenshots, HTML, metrics, and drift report |
+|---|---|---|
+| Docs to RAG | `python -m prodkit_browser.jobs.docs_to_rag --fixture benchmarks/fixtures/docs_pages.json` | Normalized records and HTML artifacts |
+| E-commerce price monitor | `python -m prodkit_browser.jobs.ecommerce_price_monitor --fixture benchmarks/fixtures/ecommerce_pages.json` | Price-change events and selector drift report |
+| Playwright production debugger | `python -m prodkit_browser.jobs.playwright_production_debugger --fixture benchmarks/fixtures/browser_debug_pages.json` | Screenshot artifacts, failure reasons, and benchmark CSV |
+| Playwright selector drift | `python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fixtures/ecommerce_pages.json` | Screenshots, HTML, metrics, and drift report |
 | Crawlee Python fixture run | `python -m prodkit_browser.jobs.crawlee_docs_to_rag --fixture benchmarks/fixtures/docs_pages.json` | Crawlee dataset plus normalized records |
-| Local benchmark | `python -m benchmarks.scripts.run_local_benchmark` | raw CSV and summary metrics |
-| Provider scaffold benchmark | `python -m benchmarks.scripts.run_provider_stub_benchmark` | provider comparison scaffold with evidence labels |
+| Local benchmark | `python -m benchmarks.scripts.run_local_benchmark` | Raw CSV and summary metrics |
+| Provider scaffold benchmark | `python -m benchmarks.scripts.run_provider_stub_benchmark` | Provider comparison scaffold with evidence labels |
 
 Example ecommerce output:
 
@@ -145,13 +152,13 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 ## Production Decision Map
 
 | Mode | Best for | Warning signs | Metrics to watch | When to upgrade |
-| --- | --- | --- | --- | --- |
-| Local HTTP / fixture | parser development | not real-world enough | parse accuracy, bytes out | before external tests |
-| Local browser | small scheduled jobs | crashes, timeouts | p95 latency, retry rate | when maintenance grows |
-| Proxy-backed browser | region/session testing | 403/429 spikes | block rate, retry cost | when ops cost grows |
-| Managed browser API | reliability-sensitive workflows | provider cost | success rate, p95, cost per 1k pages | when reliability matters |
-| Scraping API | commodity extraction | less control | success rate, latency | when speed matters |
-| SERP API | search result monitoring | review site/API terms first | quota, cost, freshness | when SERP is core data |
+|---|---|---|---|---|
+| Local HTTP / fixture | Parser development | Not real-world enough | Parse accuracy, bytes out | Before external tests |
+| Local browser | Small scheduled jobs | Crashes, timeouts | p95 latency, retry rate | When maintenance grows |
+| Proxy-backed browser | Region/session testing | 403/429 spikes | Block rate, retry cost | When ops cost grows |
+| Managed browser API | Reliability-sensitive workflows | Provider cost | Success rate, p95, cost per 1k pages | When reliability matters |
+| Scraping API | Commodity extraction | Less control | Success rate, latency | When speed matters |
+| SERP API | Search result monitoring | Review site/API terms first | Quota, cost, freshness | When SERP is core data |
 
 ## Production Guides
 
