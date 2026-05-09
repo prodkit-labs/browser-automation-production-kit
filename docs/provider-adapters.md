@@ -79,4 +79,15 @@ Generate the provider benchmark planning template:
 python -m benchmarks.scripts.generate_provider_benchmark_template
 ```
 
+Run an opt-in external provider benchmark only after a provider adapter and
+required environment variables are available:
+
+```bash
+python -m benchmarks.scripts.run_external_provider_benchmark \
+  --adapter your_package.your_module:YourProviderAdapter
+```
+
+The external harness is not part of the default CI path. It writes raw CSV only
+after required provider environment variables are present.
+
 The mock adapters are not provider recommendations. They exist so the CSV format, evidence labels, and reporting workflow can be tested before adding real external integrations.

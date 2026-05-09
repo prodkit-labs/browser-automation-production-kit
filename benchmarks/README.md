@@ -25,6 +25,17 @@ python -m benchmarks.scripts.generate_provider_benchmark_template
 The template writes candidate provider rows to `benchmarks/raw/provider_benchmark_template.csv`.
 Candidate rows are not recommendations and do not include affiliate URLs.
 
+Opt-in external provider benchmark harness:
+
+```bash
+python -m benchmarks.scripts.run_external_provider_benchmark \
+  --adapter your_package.your_module:YourProviderAdapter
+```
+
+The harness does not run by default in CI. It validates the adapter's required
+environment variables before loading fixtures or making external calls. If
+credentials are missing, it exits with a JSON error and writes no CSV.
+
 Crawlee fixture run:
 
 ```bash

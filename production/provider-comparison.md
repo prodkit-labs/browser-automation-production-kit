@@ -14,6 +14,14 @@ Generate the provider benchmark template:
 python -m benchmarks.scripts.generate_provider_benchmark_template
 ```
 
+Run an opt-in external provider benchmark only after credentials and usage
+limits have been reviewed:
+
+```bash
+python -m benchmarks.scripts.run_external_provider_benchmark \
+  --adapter your_package.your_module:YourProviderAdapter
+```
+
 The scaffold uses deterministic local/mock adapters. Replace it with real provider adapters only after credentials, usage limits, disclosure, and benchmark fixture scope are reviewed.
 
 Evidence labels:

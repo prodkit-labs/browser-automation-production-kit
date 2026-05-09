@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added opt-in external provider benchmark harness with required environment
+  variable checks and raw CSV output.
+
 ## v0.2.0 - Workflow Lab Foundation
 
 - Added network failure fixture coverage to the Playwright production debugger.
