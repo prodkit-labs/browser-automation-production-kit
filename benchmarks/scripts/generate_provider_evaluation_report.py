@@ -64,16 +64,19 @@ def summarize_raw_csv(raw_csv: Path) -> list[ProviderReportRow]:
     for provider, rows in sorted(provider_rows.items()):
         runs = len(rows)
         successes = sum(1 for row in rows if _as_bool(row["ok"]))
-        evidence = rows[0].get("evidence", "not tested")
+        evidence = rows[0].get("run_evidence") or rows[0].get("evidence", "not tested")
+        category = rows[0].get("category") or DEFAULT_CATEGORIES.get(provider, "needs category")
         latencies = [_as_float(row.get("latency_ms")) for row in rows]
         costs = [_as_float(row.get("cost_usd")) for row in rows]
         total_cost = sum(costs)
         failures = Counter(_failure_label(row.get("error", "")) for row in rows)
-        artifact_support = "html" if any(_as_float(row.get("bytes_out")) > 0 for row in rows) else "none"
+        artifact_support = "html" if any(
+            row.get("artifact_path") or _as_float(row.get("bytes_out")) > 0 for row in rows
+        ) else "none"
         summaries.append(
             ProviderReportRow(
                 provider=provider,
-                category=DEFAULT_CATEGORIES.get(provider, "needs category"),
+                category=category,
                 evidence=evidence,
                 runs=runs,
                 success_rate=round(successes / runs, 4) if runs else 0.0,

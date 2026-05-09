@@ -15,6 +15,7 @@ def test_chunks_from_record_preserves_metadata() -> None:
     assert chunks[0].title == "Getting Started"
     assert chunks[0].heading_path == ["Getting Started"]
     assert chunks[0].token_count == 5
+    assert chunks[0].whitespace_token_count == 5
     assert chunks[0].char_count == len("Getting Started\nInstall the package.")
     assert len(chunks[0].content_hash) == 64
     assert len(chunks[0].chunk_id) == 16
@@ -35,6 +36,20 @@ def test_chunks_split_on_paragraph_boundaries() -> None:
         "second paragraph",
         "third paragraph",
     ]
+
+
+def test_chunks_hard_split_long_paragraphs() -> None:
+    chunks = chunks_from_record(
+        {
+            "url": "https://example.test/docs/long",
+            "title": "Long",
+            "text": "abcdefghij",
+        },
+        max_chars=4,
+    )
+
+    assert [chunk.text for chunk in chunks] == ["abcd", "efgh", "ij"]
+    assert all(chunk.char_count <= 4 for chunk in chunks)
 
 
 def test_slug_from_url_uses_index_for_root() -> None:

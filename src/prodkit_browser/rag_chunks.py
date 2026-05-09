@@ -15,6 +15,7 @@ class DocumentChunk:
     heading_path: list[str]
     text: str
     token_count: int
+    whitespace_token_count: int
     char_count: int
     content_hash: str
 
@@ -43,6 +44,17 @@ def chunk_text(text: str, max_chars: int = 1200) -> list[str]:
     current_len = 0
 
     for paragraph in paragraphs:
+        if len(paragraph) > max_chars:
+            if current:
+                chunks.append("\n".join(current))
+                current = []
+                current_len = 0
+            chunks.extend(
+                paragraph[index : index + max_chars]
+                for index in range(0, len(paragraph), max_chars)
+            )
+            continue
+
         separator_len = 1 if current else 0
         proposed_len = current_len + separator_len + len(paragraph)
         if current and proposed_len > max_chars:
@@ -68,6 +80,7 @@ def chunks_from_record(record: dict[str, object], max_chars: int = 1200) -> list
     chunks: list[DocumentChunk] = []
 
     for index, text in enumerate(chunk_text(str(record["text"]), max_chars=max_chars)):
+        whitespace_token_count = len(text.split())
         chunks.append(
             DocumentChunk(
                 chunk_id=stable_chunk_id(source_url, index, text),
@@ -75,7 +88,8 @@ def chunks_from_record(record: dict[str, object], max_chars: int = 1200) -> list
                 title=title,
                 heading_path=[str(heading) for heading in heading_path],
                 text=text,
-                token_count=len(text.split()),
+                token_count=whitespace_token_count,
+                whitespace_token_count=whitespace_token_count,
                 char_count=len(text),
                 content_hash=content_hash(text),
             )

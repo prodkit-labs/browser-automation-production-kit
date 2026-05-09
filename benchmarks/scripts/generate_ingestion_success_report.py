@@ -26,7 +26,8 @@ CSV_FIELDS = [
     "runtime_ms",
     "artifact_storage_mb",
     "local_runtime_cost_usd",
-    "artifact_storage_gb_month_cost_usd",
+    "artifact_storage_gb_month_rate_usd",
+    "artifact_storage_cost_usd",
     "provider_calls",
     "provider_cost_usd",
     "notes",
@@ -46,7 +47,7 @@ class IngestionReportRow:
     runtime_ms: float
     artifact_storage_mb: float
     local_runtime_cost_usd: float
-    artifact_storage_gb_month_cost_usd: float
+    artifact_storage_gb_month_rate_usd: float
     provider_calls: int
     provider_cost_usd: float
     notes: str
@@ -56,6 +57,11 @@ class IngestionReportRow:
         if self.pages_attempted == 0:
             return 0.0
         return round(self.pages_succeeded / self.pages_attempted, 4)
+
+    @property
+    def artifact_storage_cost_usd(self) -> float:
+        storage_gb = self.artifact_storage_mb / 1024
+        return round(storage_gb * self.artifact_storage_gb_month_rate_usd, 8)
 
 
 def _directory_size_mb(path: Path) -> float:
@@ -71,7 +77,7 @@ def run_local_ingestion(
     *,
     retries: int = 0,
     local_runtime_cost_usd: float = 0.0,
-    artifact_storage_gb_month_cost_usd: float = 0.02,
+    artifact_storage_gb_month_rate_usd: float = 0.02,
 ) -> IngestionReportRow:
     pages, urls = load_fixture(fixture_path)
     adapter = LocalFixtureAdapter(pages)
@@ -107,7 +113,7 @@ def run_local_ingestion(
         runtime_ms=round(runtime_ms, 4),
         artifact_storage_mb=_directory_size_mb(artifact_dir),
         local_runtime_cost_usd=local_runtime_cost_usd,
-        artifact_storage_gb_month_cost_usd=artifact_storage_gb_month_cost_usd,
+        artifact_storage_gb_month_rate_usd=artifact_storage_gb_month_rate_usd,
         provider_calls=0,
         provider_cost_usd=0.0,
         notes="local fixture run; no external provider calls",
@@ -127,7 +133,7 @@ def future_provider_placeholder() -> IngestionReportRow:
         runtime_ms=0.0,
         artifact_storage_mb=0.0,
         local_runtime_cost_usd=0.0,
-        artifact_storage_gb_month_cost_usd=0.0,
+        artifact_storage_gb_month_rate_usd=0.0,
         provider_calls=0,
         provider_cost_usd=0.0,
         notes="placeholder only; add measured raw data before comparing providers",
@@ -154,7 +160,8 @@ def write_raw_results(output: Path, rows: list[IngestionReportRow]) -> None:
                     "runtime_ms": row.runtime_ms,
                     "artifact_storage_mb": row.artifact_storage_mb,
                     "local_runtime_cost_usd": row.local_runtime_cost_usd,
-                    "artifact_storage_gb_month_cost_usd": row.artifact_storage_gb_month_cost_usd,
+                    "artifact_storage_gb_month_rate_usd": row.artifact_storage_gb_month_rate_usd,
+                    "artifact_storage_cost_usd": row.artifact_storage_cost_usd,
                     "provider_calls": row.provider_calls,
                     "provider_cost_usd": row.provider_cost_usd,
                     "notes": row.notes,
@@ -173,7 +180,8 @@ def render_report(raw_csv: Path, rows: list[IngestionReportRow]) -> str:
         "| {scenario} | {evidence} | {pages_attempted} | {pages_succeeded} | "
         "{pages_failed} | {success_rate:.2%} | {bytes_fetched} | {chunks_produced} | "
         "{retries} | {runtime_ms:.2f} | {artifact_storage_mb:.6f} | "
-        "${local_runtime_cost_usd:.4f} | ${artifact_storage_gb_month_cost_usd:.4f} | "
+        "${local_runtime_cost_usd:.4f} | ${artifact_storage_gb_month_rate_usd:.4f} | "
+        "${artifact_storage_cost_usd:.8f} | "
         "{provider_calls} | ${provider_cost_usd:.4f} |".format(
             scenario=row.scenario,
             evidence=row.evidence,
@@ -187,7 +195,8 @@ def render_report(raw_csv: Path, rows: list[IngestionReportRow]) -> str:
             runtime_ms=row.runtime_ms,
             artifact_storage_mb=row.artifact_storage_mb,
             local_runtime_cost_usd=row.local_runtime_cost_usd,
-            artifact_storage_gb_month_cost_usd=row.artifact_storage_gb_month_cost_usd,
+            artifact_storage_gb_month_rate_usd=row.artifact_storage_gb_month_rate_usd,
+            artifact_storage_cost_usd=row.artifact_storage_cost_usd,
             provider_calls=row.provider_calls,
             provider_cost_usd=row.provider_cost_usd,
         )
@@ -227,8 +236,8 @@ Raw rows are written to:
 
 ## Ingestion Summary
 
-| Scenario | Evidence | Pages attempted | Pages succeeded | Pages failed | Success rate | Bytes fetched | Chunks produced | Retries | Runtime ms | Artifact MB | Local runtime cost | Storage GB-month cost | Provider calls | Provider cost |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Scenario | Evidence | Pages attempted | Pages succeeded | Pages failed | Success rate | Bytes fetched | Chunks produced | Retries | Runtime ms | Artifact MB | Local runtime cost | Storage rate / GB-month | Storage cost | Provider calls | Provider cost |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 {table_rows}
 
 ## How To Use This Before Scaling
@@ -255,13 +264,13 @@ def main() -> None:
     parser.add_argument("--artifact-dir", default="artifacts/ingestion-success")
     parser.add_argument("--raw-csv", default="benchmarks/raw/ingestion_success_cost.csv")
     parser.add_argument("--report", default="benchmarks/reports/ingestion-success-cost.md")
-    parser.add_argument("--artifact-storage-gb-month-cost-usd", type=float, default=0.02)
+    parser.add_argument("--artifact-storage-gb-month-rate-usd", type=float, default=0.02)
     args = parser.parse_args()
 
     local_row = run_local_ingestion(
         fixture_path=Path(args.fixture),
         artifact_dir=Path(args.artifact_dir),
-        artifact_storage_gb_month_cost_usd=args.artifact_storage_gb_month_cost_usd,
+        artifact_storage_gb_month_rate_usd=args.artifact_storage_gb_month_rate_usd,
     )
     rows = [local_row, future_provider_placeholder()]
     write_report(Path(args.raw_csv), Path(args.report), rows)

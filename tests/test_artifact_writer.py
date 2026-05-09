@@ -1,3 +1,5 @@
+import pytest
+
 from prodkit_browser.artifacts import ArtifactWriter
 
 
@@ -8,3 +10,10 @@ def test_artifact_writer_creates_nested_file(tmp_path) -> None:
 
     assert (tmp_path / "nested" / "output.txt").read_text(encoding="utf-8") == "hello"
     assert path.endswith("nested/output.txt")
+
+
+def test_artifact_writer_rejects_path_traversal(tmp_path) -> None:
+    writer = ArtifactWriter(tmp_path / "artifacts")
+
+    with pytest.raises(ValueError, match="escapes root"):
+        writer.write_text("../outside.txt", "nope")

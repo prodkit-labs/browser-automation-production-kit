@@ -84,7 +84,9 @@ required environment variables are available:
 
 ```bash
 python -m benchmarks.scripts.run_external_provider_benchmark \
-  --adapter your_package.your_module:YourProviderAdapter
+  --adapter your_package.your_module:YourProviderAdapter \
+  --fixture benchmarks/fixtures/external_provider_urls.example.json \
+  --run-evidence measured
 ```
 
 Run only provider adapters you trust. Adapter imports execute Python code in
@@ -92,5 +94,11 @@ your local environment before any benchmark calls are made.
 
 The external harness is not part of the default CI path. It writes raw CSV only
 after required provider environment variables are present.
+
+Default fixture URLs under `example.test` are local-only and are rejected for
+external provider runs. Use a reviewed, permitted public URL fixture for real
+provider measurements. Raw CSV separates the adapter's default candidate
+evidence from the benchmark run evidence so a provider can start as `not tested`
+and become `measured` only after a real run writes raw data.
 
 The mock adapters are not provider recommendations. They exist so the CSV format, evidence labels, and reporting workflow can be tested before adding real external integrations.

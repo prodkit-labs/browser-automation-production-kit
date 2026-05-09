@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- Split external provider benchmark run evidence from provider candidate evidence.
+- Rejected local-only `example.test` fixtures for external provider benchmarks.
+- Split ingestion storage rate from calculated storage cost.
+- Hardened artifact writing against path traversal.
+- Added hard splitting for oversized docs-to-RAG paragraphs and explicit whitespace token counts.
+- Isolated Playwright selector drift pages per fixture.
+- Expanded observability guidance with failure classes, retention, alerts, and dashboard fields.
+
 ## v0.4.0 - RAG Ingestion Layer
 
 - Added deterministic docs-to-RAG document chunk output and schema docs.

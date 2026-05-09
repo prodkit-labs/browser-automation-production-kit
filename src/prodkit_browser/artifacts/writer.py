@@ -9,7 +9,10 @@ class ArtifactWriter:
         self.root.mkdir(parents=True, exist_ok=True)
 
     def write_text(self, relative_path: str, text: str) -> str:
-        path = self.root / relative_path
+        root = self.root.resolve()
+        path = (self.root / relative_path).resolve()
+        if path != root and root not in path.parents:
+            raise ValueError(f"Artifact path escapes root: {relative_path}")
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text, encoding="utf-8")
         return str(path)

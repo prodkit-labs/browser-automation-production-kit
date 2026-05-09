@@ -34,9 +34,9 @@ async def run(fixture_path: Path, artifact_dir: Path) -> dict[str, object]:
     with FixtureHttpServer(fixture_path) as server:
         async with async_playwright() as playwright:
             browser = await playwright.chromium.launch()
-            page = await browser.new_page()
 
             for product, url in zip(products, server.urls, strict=True):
+                page = await browser.new_page()
                 start = perf_counter()
                 slug = _product_slug(product.url)
                 html_path = f"playwright-selector-drift/html/{slug}.html"
@@ -106,6 +106,8 @@ async def run(fixture_path: Path, artifact_dir: Path) -> dict[str, object]:
                             error="selector drift",
                         )
                     )
+                finally:
+                    await page.close()
 
             await browser.close()
 

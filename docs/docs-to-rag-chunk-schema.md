@@ -18,7 +18,8 @@ an embeddings API, vector database, or hosted browser provider.
 | `title` | string | First page heading, or a readable fallback derived from the URL. |
 | `heading_path` | array | Heading path available for this chunk. |
 | `text` | string | Chunk text. |
-| `token_count` | number | Whitespace token count for quick local sizing. |
+| `token_count` | number | Backward-compatible whitespace token estimate for quick local sizing. |
+| `whitespace_token_count` | number | Whitespace token estimate; not tokenizer output. |
 | `char_count` | number | Character count for the chunk text. |
 | `content_hash` | string | SHA-256 hash of the chunk text. |
 
@@ -32,6 +33,7 @@ an embeddings API, vector database, or hosted browser provider.
   "heading_path": ["Getting Started"],
   "text": "Getting Started\nInstall the package, configure a worker...",
   "token_count": 12,
+  "whitespace_token_count": 12,
   "char_count": 86,
   "content_hash": "..."
 }

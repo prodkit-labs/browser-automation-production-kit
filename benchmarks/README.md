@@ -60,7 +60,9 @@ Opt-in external provider benchmark harness:
 
 ```bash
 python -m benchmarks.scripts.run_external_provider_benchmark \
-  --adapter your_package.your_module:YourProviderAdapter
+  --adapter your_package.your_module:YourProviderAdapter \
+  --fixture benchmarks/fixtures/external_provider_urls.example.json \
+  --run-evidence measured
 ```
 
 Run only provider adapters you trust. Adapter imports execute Python code in
@@ -69,6 +71,18 @@ your local environment before any benchmark calls are made.
 The harness does not run by default in CI. It validates the adapter's required
 environment variables before loading fixtures or making external calls. If
 credentials are missing, it exits with a JSON error and writes no CSV.
+
+Default `example.test` fixtures are local-only. External provider benchmarks
+must use a reviewed public URL fixture, or an adapter that explicitly maps test
+URLs to local fixture HTML without external calls. The example public URL
+fixture is a placeholder shape; replace it before measuring a real provider.
+
+External raw CSV separates:
+
+- `run_evidence`: whether this benchmark run actually measured, estimated, or
+  skipped the provider.
+- `provider_candidate_evidence`: the provider row's default candidate status
+  before this run.
 
 Crawlee fixture run:
 

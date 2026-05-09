@@ -36,6 +36,7 @@ def test_crawlee_docs_to_rag_writes_shared_chunk_schema_and_metadata(tmp_path) -
         "heading_path",
         "text",
         "token_count",
+        "whitespace_token_count",
         "char_count",
         "content_hash",
     }

@@ -25,6 +25,7 @@ def test_docs_to_rag_writes_deterministic_chunks(tmp_path) -> None:
     assert chunks[0]["title"] == "Getting Started"
     assert chunks[0]["heading_path"] == ["Getting Started"]
     assert chunks[0]["token_count"] == len(chunks[0]["text"].split())
+    assert chunks[0]["whitespace_token_count"] == len(chunks[0]["text"].split())
     assert chunks[0]["char_count"] == len(chunks[0]["text"])
     assert len(chunks[0]["content_hash"]) == 64
     assert len(chunks[0]["chunk_id"]) == 16

@@ -1,3 +1,5 @@
+import pytest
+
 from prodkit_browser.adapters.provider import (
     ExternalProviderAdapterBase,
     FetchResult,
@@ -51,7 +53,7 @@ def test_external_benchmark_skips_when_required_env_is_missing(tmp_path) -> None
 def test_external_benchmark_writes_raw_csv_when_env_is_present(tmp_path) -> None:
     fixture = tmp_path / "fixture.json"
     fixture.write_text(
-        '{"pages":[{"url":"https://example.test/a","html":"<html>A</html>"}]}',
+        '{"pages":[{"url":"https://example.com/"}]}',
         encoding="utf-8",
     )
     output = tmp_path / "external.csv"
@@ -65,8 +67,29 @@ def test_external_benchmark_writes_raw_csv_when_env_is_present(tmp_path) -> None
 
     assert result["ok"] is True
     assert result["provider"] == "example-external-provider"
-    assert result["evidence"] == "not tested"
+    assert result["run_evidence"] == "measured"
+    assert result["provider_candidate_evidence"] == "not tested"
     assert result["summary"]["success_rate"] == 1.0
     assert result["summary"]["cost_per_1k_requests_usd"] == 2
     assert result["summary"]["cost_per_1k_successful_pages_usd"] == 2
-    assert output.read_text(encoding="utf-8").startswith("evidence,provider,url")
+    assert output.read_text(encoding="utf-8").startswith(
+        "run_evidence,provider_candidate_evidence,provider,category"
+    )
+
+
+def test_external_benchmark_rejects_local_only_fixture_urls(tmp_path) -> None:
+    fixture = tmp_path / "fixture.json"
+    fixture.write_text(
+        '{"pages":[{"url":"https://example.test/a","html":"<html>A</html>"}]}',
+        encoding="utf-8",
+    )
+
+    output = tmp_path / "external.csv"
+
+    with pytest.raises(ValueError, match="local-only"):
+        run_external_benchmark(
+            adapter_path=ADAPTER_PATH,
+            fixture_path=fixture,
+            output=output,
+            environ={"EXAMPLE_PROVIDER_API_KEY": "secret"},
+        )
