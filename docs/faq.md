@@ -6,7 +6,16 @@ No. Provider-specific code belongs behind adapters, and benchmarks should preser
 
 ## Is Crawlee required?
 
-Not for the first skeleton. Crawlee Python is the first implementation track, but the local mode keeps examples runnable before provider or framework-specific code is added.
+No. The repo has three runnable paths:
+
+- local fixture workflows
+- Crawlee Python fixture workflows
+- Playwright browser workflows
+
+Crawlee is useful for crawler-style jobs that need request handling, datasets,
+and worker patterns. Playwright is useful when a browser runtime is required.
+Local fixture mode keeps examples runnable before provider or framework-specific
+code is added.
 
 ## Where should commercial recommendations appear?
 

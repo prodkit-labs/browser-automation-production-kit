@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Updated CI evidence, stale docs, environment template, and workflow lab model.
+
 ## v0.3.1 - Metrics and Runtime Hardening
 
 - Hardened version metadata, provider cost metrics, p95 calculations, Docker

@@ -147,6 +147,7 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 - Playwright browser track
 - [Provider adapters](docs/provider-adapters.md)
 - [Compliance boundaries](docs/compliance-boundaries.md)
+- [Workflow lab model](docs/workflow-lab-model.md)
 
 ## Included Examples
 
