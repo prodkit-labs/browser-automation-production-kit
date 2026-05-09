@@ -9,7 +9,7 @@ A Python/Crawlee/Playwright starter for turning browser automation scripts into 
 
 Most examples stop at "it works locally." This repo focuses on what breaks next: artifacts, retries, selector drift, metrics, provider handoffs, cost tracking, and compliance boundaries.
 
-Current release: [v0.3.0](https://github.com/prodkit-labs/browser-automation-production-kit/releases/tag/v0.3.0) - provider evaluation layer with opt-in external benchmarks, report templates, cost modeling, and deployment guidance.
+Current release: [v0.3.1](https://github.com/prodkit-labs/browser-automation-production-kit/releases/tag/v0.3.1) - metrics and runtime hardening for provider cost reports, Docker workers, and Playwright artifacts.
 
 This kit helps you answer:
 

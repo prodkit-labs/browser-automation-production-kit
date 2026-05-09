@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v0.3.1 - Metrics and Runtime Hardening
+
 - Hardened version metadata, provider cost metrics, p95 calculations, Docker
   worker path, and Playwright debugger page isolation.
 
