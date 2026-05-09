@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Added deterministic docs-to-RAG document chunk output and schema docs.
+- Added a local retrieval benchmark scaffold for docs-to-RAG fixture chunks.
 
 ## v0.3.2 - Workflow Lab Polish
 

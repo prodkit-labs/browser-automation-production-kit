@@ -57,6 +57,7 @@ python -m benchmarks.scripts.run_provider_stub_benchmark
 python -m benchmarks.scripts.generate_provider_benchmark_template
 python -m benchmarks.scripts.generate_provider_evaluation_report
 python -m benchmarks.scripts.generate_cost_per_1k_report
+python -m benchmarks.scripts.run_retrieval_benchmark
 ```
 
 Outputs are written to `artifacts/` and `benchmarks/raw/`.
@@ -90,6 +91,7 @@ python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fi
 | Provider benchmark template | `python -m benchmarks.scripts.generate_provider_benchmark_template` | Candidate provider rows without affiliate URLs |
 | Provider evaluation report | `python -m benchmarks.scripts.generate_provider_evaluation_report` | Markdown report from raw provider benchmark CSV |
 | Cost per 1k pages report | `python -m benchmarks.scripts.generate_cost_per_1k_report` | Raw cost model and Markdown cost-control report |
+| Retrieval benchmark | `python -m benchmarks.scripts.run_retrieval_benchmark` | Raw retrieval CSV and local fixture hit-rate report |
 
 Example ecommerce output:
 

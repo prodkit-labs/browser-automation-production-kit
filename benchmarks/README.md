@@ -45,6 +45,17 @@ python -m benchmarks.scripts.generate_cost_per_1k_report
 This writes raw assumptions to `benchmarks/raw/cost_per_1k_pages.csv` and a
 readable report to `benchmarks/reports/cost-per-1k-pages.md`.
 
+Retrieval benchmark scaffold:
+
+```bash
+python -m benchmarks.scripts.run_retrieval_benchmark
+```
+
+This scores local docs-to-RAG chunks against fixture queries with deterministic
+token overlap. It writes raw rows to `benchmarks/raw/retrieval_benchmark.csv`
+and a report to `benchmarks/reports/retrieval-benchmark.md`. It does not call
+hosted LLMs, embedding APIs, vector databases, or external providers.
+
 Opt-in external provider benchmark harness:
 
 ```bash
@@ -76,5 +87,6 @@ Tracked metrics:
 - `retry_rate`
 - `bytes_out`
 - `artifact_storage_mb`
+- `retrieval_hit_rate`
 
 Provider comparison pages should label every number as `measured`, `estimated`, or `not tested`.

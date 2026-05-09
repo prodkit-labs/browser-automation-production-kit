@@ -1,0 +1,22 @@
+{
+  "queries": [
+    {
+      "id": "install-worker",
+      "query": "How do I install the package and run a browser automation worker?",
+      "expected_source_url": "https://example.test/docs/getting-started",
+      "notes": "Should retrieve the getting started page about installing and configuring a worker."
+    },
+    {
+      "id": "production-metrics",
+      "query": "Which metrics should I track before scaling a production browser job?",
+      "expected_source_url": "https://example.test/docs/production",
+      "notes": "Should retrieve the production page about success rate, latency, retries, artifacts, and provider costs."
+    },
+    {
+      "id": "failure-artifacts",
+      "query": "What artifacts should I save when a browser run fails?",
+      "expected_source_url": "https://example.test/docs/debugging",
+      "notes": "Should retrieve the debugging page about HTML, screenshots, logs, and request metadata."
+    }
+  ]
+}
