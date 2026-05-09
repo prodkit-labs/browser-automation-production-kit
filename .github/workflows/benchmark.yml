@@ -28,3 +28,4 @@ jobs:
       - run: python -m benchmarks.scripts.run_local_benchmark
       - run: python -m benchmarks.scripts.run_provider_stub_benchmark
       - run: python -m benchmarks.scripts.generate_provider_benchmark_template
+      - run: python -m benchmarks.scripts.generate_provider_evaluation_report

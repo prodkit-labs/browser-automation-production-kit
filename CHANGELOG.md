@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added provider evaluation report template and raw CSV to Markdown report
+  generator.
 - Added opt-in external provider benchmark harness with required environment
   variable checks and raw CSV output.
 

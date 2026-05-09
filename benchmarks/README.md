@@ -25,6 +25,17 @@ python -m benchmarks.scripts.generate_provider_benchmark_template
 The template writes candidate provider rows to `benchmarks/raw/provider_benchmark_template.csv`.
 Candidate rows are not recommendations and do not include affiliate URLs.
 
+Provider evaluation report:
+
+```bash
+python -m benchmarks.scripts.generate_provider_evaluation_report
+```
+
+This turns raw provider benchmark CSV into a readable Markdown report. The
+generated report is written to `benchmarks/reports/provider-evaluation-report.md`.
+The tracked template lives at
+[`../reports/provider-evaluation-report-template.md`](../reports/provider-evaluation-report-template.md).
+
 Opt-in external provider benchmark harness:
 
 ```bash

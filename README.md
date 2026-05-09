@@ -55,6 +55,7 @@ python -m prodkit_browser.jobs.ecommerce_price_monitor --fixture benchmarks/fixt
 python -m benchmarks.scripts.run_local_benchmark
 python -m benchmarks.scripts.run_provider_stub_benchmark
 python -m benchmarks.scripts.generate_provider_benchmark_template
+python -m benchmarks.scripts.generate_provider_evaluation_report
 ```
 
 Outputs are written to `artifacts/` and `benchmarks/raw/`.
@@ -86,6 +87,7 @@ python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fi
 | Local benchmark | `python -m benchmarks.scripts.run_local_benchmark` | Raw CSV and summary metrics |
 | Provider scaffold benchmark | `python -m benchmarks.scripts.run_provider_stub_benchmark` | Provider comparison scaffold with evidence labels |
 | Provider benchmark template | `python -m benchmarks.scripts.generate_provider_benchmark_template` | Candidate provider rows without affiliate URLs |
+| Provider evaluation report | `python -m benchmarks.scripts.generate_provider_evaluation_report` | Markdown report from raw provider benchmark CSV |
 
 Example ecommerce output:
 
@@ -170,6 +172,7 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 - [Cost control](production/cost-control.md)
 - [Provider options](production/providers.md)
 - [Provider comparison](production/provider-comparison.md)
+- [Provider evaluation report template](reports/provider-evaluation-report-template.md)
 - [Disclosure policy](production/disclosure.md)
 
 ## Non-Goals

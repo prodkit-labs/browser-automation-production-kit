@@ -14,6 +14,12 @@ Generate the provider benchmark template:
 python -m benchmarks.scripts.generate_provider_benchmark_template
 ```
 
+Generate a readable provider evaluation report from raw benchmark CSV:
+
+```bash
+python -m benchmarks.scripts.generate_provider_evaluation_report
+```
+
 Run an opt-in external provider benchmark only after credentials and usage
 limits have been reviewed:
 
@@ -52,6 +58,12 @@ affiliate URLs.
 
 Real provider adapters should expose metadata, capabilities, and required
 environment variables before they are used in benchmark scripts.
+
+The provider evaluation report template is available at
+[`reports/provider-evaluation-report-template.md`](../reports/provider-evaluation-report-template.md).
+It preserves the local/open-source path, fixture scope, setup, credentials,
+rate limits, evidence label, summary metrics, category tradeoffs, and a
+disclosure checklist before any future provider link is added.
 
 | Provider | Evidence | Execution mode | Scenario fit | Tradeoffs to test | Link policy |
 | --- | --- | --- | --- | --- | --- |
