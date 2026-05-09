@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Expanded scheduled browser worker deployment guidance.
 - Added reproducible cost-per-1k-pages report template and generator.
 - Added provider evaluation report template and raw CSV to Markdown report
   generator.

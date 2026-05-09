@@ -169,7 +169,7 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 
 ## Production Guides
 
-- [Deployment](production/deployment.md)
+- [Scheduled worker deployment](production/deployment.md)
 - [Observability](production/observability.md)
 - [Cost control](production/cost-control.md)
 - [Provider options](production/providers.md)
