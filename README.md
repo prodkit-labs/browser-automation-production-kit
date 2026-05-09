@@ -9,7 +9,7 @@ A Python/Crawlee/Playwright starter for turning browser automation scripts into 
 
 Most examples stop at "it works locally." This repo focuses on what breaks next: artifacts, retries, selector drift, metrics, provider handoffs, cost tracking, and compliance boundaries.
 
-Current release: [v0.4.0](https://github.com/prodkit-labs/browser-automation-production-kit/releases/tag/v0.4.0) - local-first RAG ingestion with deterministic chunks, retrieval benchmarks, Crawlee metadata, and ingestion success reports.
+Current release: [v0.4.1](https://github.com/prodkit-labs/browser-automation-production-kit/releases/tag/v0.4.1) - evidence semantics, artifact safety, ingestion cost clarity, and RAG chunking hardening.
 
 This kit helps you answer:
 

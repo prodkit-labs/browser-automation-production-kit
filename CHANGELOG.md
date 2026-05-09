@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.4.1 - Evidence, Cost, and Artifact Hardening
 
 - Split external provider benchmark run evidence from provider candidate evidence.
 - Rejected local-only `example.test` fixtures for external provider benchmarks.
