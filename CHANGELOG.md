@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.4.0 - RAG Ingestion Layer
 
 - Added deterministic docs-to-RAG document chunk output and schema docs.
 - Added a local retrieval benchmark scaffold for docs-to-RAG fixture chunks.
