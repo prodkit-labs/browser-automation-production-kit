@@ -138,9 +138,9 @@ async def run(
     with BrowserDebugServer(pages) as server:
         async with async_playwright() as playwright:
             browser = await playwright.chromium.launch()
-            page = await browser.new_page()
 
             for debug_page in pages:
+                page = await browser.new_page()
                 url = server.urls[debug_page.slug]
                 html_path = f"playwright-production-debugger/html/{debug_page.slug}.html"
                 screenshot_path = artifact_dir / (
@@ -214,6 +214,7 @@ async def run(
                         "screenshot": screenshot,
                     }
                 )
+                await page.close()
 
             await browser.close()
 

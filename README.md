@@ -15,7 +15,7 @@ This kit helps you answer:
 
 - What failed: selector drift, 403/429, timeout, retry budget, or provider issue?
 - Should this job run locally, with Playwright, through proxies, or with a managed browser API?
-- What are the success rate, p95 latency, artifact size, and cost per 1k pages?
+- What are the success rate, p95 latency, artifact size, and cost per 1k successful pages?
 - When is self-hosting no longer worth it?
 
 Ships today:
@@ -163,7 +163,7 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 | Local HTTP / fixture | Parser development | Not real-world enough | Parse accuracy, bytes out | Before external tests |
 | Local browser | Small scheduled jobs | Crashes, timeouts | p95 latency, retry rate | When maintenance grows |
 | Proxy-backed browser | Region/session testing | 403/429 spikes | Block rate, retry cost | When ops cost grows |
-| Managed browser API | Reliability-sensitive workflows | Provider cost | Success rate, p95, cost per 1k pages | When reliability matters |
+| Managed browser API | Reliability-sensitive workflows | Provider cost | Success rate, p95, cost per 1k successful pages | When reliability matters |
 | Scraping API | Commodity extraction | Less control | Success rate, latency | When speed matters |
 | SERP API | Search result monitoring | Review site/API terms first | Quota, cost, freshness | When SERP is core data |
 

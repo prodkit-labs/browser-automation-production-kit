@@ -67,4 +67,6 @@ def test_external_benchmark_writes_raw_csv_when_env_is_present(tmp_path) -> None
     assert result["provider"] == "example-external-provider"
     assert result["evidence"] == "not tested"
     assert result["summary"]["success_rate"] == 1.0
+    assert result["summary"]["cost_per_1k_requests_usd"] == 2
+    assert result["summary"]["cost_per_1k_successful_pages_usd"] == 2
     assert output.read_text(encoding="utf-8").startswith("evidence,provider,url")

@@ -87,6 +87,9 @@ python -m benchmarks.scripts.run_external_provider_benchmark \
   --adapter your_package.your_module:YourProviderAdapter
 ```
 
+Run only provider adapters you trust. Adapter imports execute Python code in
+your local environment before any benchmark calls are made.
+
 The external harness is not part of the default CI path. It writes raw CSV only
 after required provider environment variables are present.
 

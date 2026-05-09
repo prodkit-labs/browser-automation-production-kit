@@ -36,3 +36,9 @@ them to public storage, issue comments, CI artifacts, or shared workspaces.
 Provider credentials must come from environment variables or a secret manager.
 Do not commit API keys, proxy credentials, session tokens, cookies, or `.env`
 files.
+
+## External Provider Adapters
+
+Run only provider adapters you trust. The external benchmark harness imports the
+adapter module named by `--adapter`, and importing a Python module executes code
+in your local environment before benchmark calls are made.

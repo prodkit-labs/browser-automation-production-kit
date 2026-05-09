@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Hardened version metadata, provider cost metrics, p95 calculations, Docker
+  worker path, and Playwright debugger page isolation.
+
 ## v0.3.0 - Provider Evaluation Layer
 
 - Expanded scheduled browser worker deployment guidance.

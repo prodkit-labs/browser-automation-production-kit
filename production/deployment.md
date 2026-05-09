@@ -14,7 +14,7 @@ surface must exist before a browser job becomes production traffic.
 | Self-hosted worker | Small scheduled jobs, internal workflows, low-volume public pages | Browser dependencies, disk growth, retries, host restarts | run logs, raw CSV, failure artifacts |
 | Lightweight PaaS worker | Teams that want managed runtime and simple scheduled jobs | browser install size, job timeout, ephemeral disk, artifact export | build logs, schedule logs, artifact destination |
 | Hosted automation platform | Crawlee-style workflows, hosted scheduling, datasets | platform runtime boundaries, storage model, workflow portability | raw benchmark CSV, cost model, artifact links |
-| Managed browser API | Playwright/Puppeteer jobs that need hosted browsers, concurrency, traces, or sessions | cost, provider limits, runtime differences, retention policy | success rate, p95 latency, cost per 1k pages, failure classes |
+| Managed browser API | Playwright/Puppeteer jobs that need hosted browsers, concurrency, traces, or sessions | cost, provider limits, runtime differences, retention policy | success rate, p95 latency, cost per 1k successful pages, failure classes |
 
 Do not choose a paid provider only because it is available. Move when the raw
 evidence shows that reliability, latency, region/session requirements, or
@@ -168,5 +168,5 @@ Then review:
 - Failed runs preserve request metadata and HTML.
 - Provider credentials scoped to the job.
 - Raw benchmark CSV is retained.
-- Cost per 1k pages is generated for provider-backed decisions.
+- Cost per 1k successful pages is generated for provider-backed decisions.
 - Compliance boundaries are reviewed before new target classes are added.

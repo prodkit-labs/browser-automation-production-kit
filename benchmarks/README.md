@@ -52,6 +52,9 @@ python -m benchmarks.scripts.run_external_provider_benchmark \
   --adapter your_package.your_module:YourProviderAdapter
 ```
 
+Run only provider adapters you trust. Adapter imports execute Python code in
+your local environment before any benchmark calls are made.
+
 The harness does not run by default in CI. It validates the adapter's required
 environment variables before loading fixtures or making external calls. If
 credentials are missing, it exits with a JSON error and writes no CSV.
@@ -67,7 +70,8 @@ Tracked metrics:
 
 - `success_rate`
 - `p95_latency_ms`
-- `cost_per_1k_pages`
+- `cost_per_1k_requests`
+- `cost_per_1k_successful_pages`
 - `captcha_or_block_rate`
 - `retry_rate`
 - `bytes_out`

@@ -6,6 +6,8 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 
+from prodkit_browser.metrics import percentile_95
+
 
 @dataclass(frozen=True)
 class ProviderReportRow:
@@ -15,7 +17,8 @@ class ProviderReportRow:
     runs: int
     success_rate: float
     p95_latency_ms: float
-    cost_per_1k_pages_usd: float
+    cost_per_1k_requests_usd: float
+    cost_per_1k_successful_pages_usd: float
     artifact_support: str
     failure_classification: str
 
@@ -45,14 +48,6 @@ def _as_float(value: str | None) -> float:
     return float(value)
 
 
-def _percentile_95(values: list[float]) -> float:
-    if not values:
-        return 0.0
-    ordered = sorted(values)
-    index = min(len(ordered) - 1, int(0.95 * (len(ordered) - 1)))
-    return round(ordered[index], 2)
-
-
 def _failure_label(error: str) -> str:
     cleaned = error.strip()
     return cleaned if cleaned else "none"
@@ -72,6 +67,7 @@ def summarize_raw_csv(raw_csv: Path) -> list[ProviderReportRow]:
         evidence = rows[0].get("evidence", "not tested")
         latencies = [_as_float(row.get("latency_ms")) for row in rows]
         costs = [_as_float(row.get("cost_usd")) for row in rows]
+        total_cost = sum(costs)
         failures = Counter(_failure_label(row.get("error", "")) for row in rows)
         artifact_support = "html" if any(_as_float(row.get("bytes_out")) > 0 for row in rows) else "none"
         summaries.append(
@@ -81,8 +77,11 @@ def summarize_raw_csv(raw_csv: Path) -> list[ProviderReportRow]:
                 evidence=evidence,
                 runs=runs,
                 success_rate=round(successes / runs, 4) if runs else 0.0,
-                p95_latency_ms=_percentile_95(latencies),
-                cost_per_1k_pages_usd=round((sum(costs) / runs) * 1000, 4) if runs else 0.0,
+                p95_latency_ms=percentile_95(latencies),
+                cost_per_1k_requests_usd=round((total_cost / runs) * 1000, 4) if runs else 0.0,
+                cost_per_1k_successful_pages_usd=round((total_cost / successes) * 1000, 4)
+                if successes
+                else 0.0,
                 artifact_support=artifact_support,
                 failure_classification=", ".join(
                     f"{label}: {count}" for label, count in sorted(failures.items())
@@ -100,14 +99,16 @@ def render_report(
 ) -> str:
     metric_rows = "\n".join(
         "| {provider} | {category} | {evidence} | {runs} | {success_rate:.4f} | "
-        "{p95_latency_ms:.2f} ms | ${cost_per_1k_pages_usd:.4f} | {artifact_support} | "
-        "{failure_classification} |".format(**row.__dict__)
+        "{p95_latency_ms:.2f} ms | ${cost_per_1k_requests_usd:.4f} | "
+        "${cost_per_1k_successful_pages_usd:.4f} | {artifact_support} | {failure_classification} |".format(
+            **row.__dict__
+        )
         for row in rows
     )
     if not metric_rows:
         metric_rows = (
             "| no rows | needs category | not tested | 0 | 0.0000 | 0.00 ms | "
-            "$0.0000 | none | none |"
+            "$0.0000 | $0.0000 | none | none |"
         )
 
     return f"""# Provider Evaluation Report
@@ -157,8 +158,8 @@ shows a production reason to evaluate paid provider options.
 
 ## Summary Metrics
 
-| Provider | Category | Evidence | Runs | Success rate | p95 latency | Cost per 1k pages | Artifact support | Failure classification |
-|---|---|---|---:|---:|---:|---:|---|---|
+| Provider | Category | Evidence | Runs | Success rate | p95 latency | Cost per 1k requests | Cost per 1k successful pages | Artifact support | Failure classification |
+|---|---|---|---:|---:|---:|---:|---:|---|---|
 {metric_rows}
 
 ## Category Tradeoffs

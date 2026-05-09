@@ -53,7 +53,8 @@ Each public provider evaluation should record:
 - rate limits
 - success rate
 - p95 latency
-- cost per 1k pages
+- cost per 1k requests
+- cost per 1k successful pages
 - artifact support
 - failure classification
 - raw CSV path

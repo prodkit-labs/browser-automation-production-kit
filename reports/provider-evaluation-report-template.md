@@ -61,9 +61,9 @@ Current evidence label: `<measured / estimated / not tested>`
 
 ## Summary Metrics
 
-| Provider | Category | Evidence | Runs | Success rate | p95 latency | Cost per 1k pages | Artifact support | Failure classification |
-|---|---|---|---:|---:|---:|---:|---|---|
-| `<provider>` | `<category>` | `<evidence>` | `<count>` | `<0.0000>` | `<ms>` | `<usd>` | `<html/screenshots/traces/none>` | `<timeout / network_error / selector_drift / provider_error / none>` |
+| Provider | Category | Evidence | Runs | Success rate | p95 latency | Cost per 1k requests | Cost per 1k successful pages | Artifact support | Failure classification |
+|---|---|---|---:|---:|---:|---:|---:|---|---|
+| `<provider>` | `<category>` | `<evidence>` | `<count>` | `<0.0000>` | `<ms>` | `<usd>` | `<usd>` | `<html/screenshots/traces/none>` | `<timeout / network_error / selector_drift / provider_error / none>` |
 
 ## Category Tradeoffs
 
@@ -110,4 +110,3 @@ Suggested notes:
 - What failed or became expensive:
 - Which metrics changed the decision:
 - What needs another benchmark before a provider link is added:
-

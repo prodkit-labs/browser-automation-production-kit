@@ -5,17 +5,12 @@ import json
 from pathlib import Path
 
 from prodkit_browser.adapters.provider import LocalFixtureAdapter, MockManagedProviderAdapter
-from prodkit_browser.metrics import summarize
+from prodkit_browser.metrics import cost_per_1k_requests, cost_per_1k_successful_pages, summarize
 
 
 def _load_pages() -> dict[str, str]:
     fixture = json.loads(Path("benchmarks/fixtures/docs_pages.json").read_text(encoding="utf-8"))
     return {page["url"]: page["html"] for page in fixture["pages"]}
-
-
-def _cost_per_1k(rows: list) -> float:
-    total_cost = sum(row.cost_usd or 0 for row in rows)
-    return round((total_cost / len(rows)) * 1000, 4) if rows else 0.0
 
 
 def main() -> None:
@@ -59,7 +54,8 @@ def main() -> None:
         for evidence, adapter in providers:
             rows = [adapter.fetch(url) for url in urls]
             summary = summarize(rows)
-            summary["cost_per_1k_pages_usd"] = _cost_per_1k(rows)
+            summary["cost_per_1k_requests_usd"] = cost_per_1k_requests(rows)
+            summary["cost_per_1k_successful_pages_usd"] = cost_per_1k_successful_pages(rows)
             summaries[adapter.name] = {"evidence": evidence, "summary": summary}
             for row in rows:
                 writer.writerow(

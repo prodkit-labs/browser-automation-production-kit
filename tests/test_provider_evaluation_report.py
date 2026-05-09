@@ -36,7 +36,9 @@ def test_provider_evaluation_report_summarizes_raw_csv(tmp_path) -> None:
     assert rows[0].evidence == "measured"
     assert rows[0].runs == 2
     assert rows[0].success_rate == 0.5
-    assert rows[0].cost_per_1k_pages_usd == 0
+    assert rows[0].p95_latency_ms == 30
+    assert rows[0].cost_per_1k_requests_usd == 0
+    assert rows[0].cost_per_1k_successful_pages_usd == 0
     assert "timeout: 1" in rows[0].failure_classification
 
 
@@ -62,7 +64,8 @@ def test_provider_evaluation_report_contains_required_policy_sections(tmp_path) 
     assert "## Credentials And Rate Limits" in report
     assert "## Summary Metrics" in report
     assert "## Category Tradeoffs" in report
-    assert "Cost per 1k pages" in report
+    assert "Cost per 1k requests" in report
+    assert "Cost per 1k successful pages" in report
     assert "Artifact support" in report
     assert "Failure classification" in report
     assert "affiliate relationship is disclosed" in report
