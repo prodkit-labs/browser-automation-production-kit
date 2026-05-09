@@ -39,6 +39,7 @@ jobs:
       - run: python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fixtures/ecommerce_pages.json
       - run: python -m prodkit_browser.jobs.playwright_production_debugger --fixture benchmarks/fixtures/browser_debug_pages.json
       - run: python -m prodkit_browser.jobs.crawlee_docs_to_rag --fixture benchmarks/fixtures/docs_pages.json
+      - run: python -m pytest tests/test_crawlee_docs_to_rag.py -q
       - run: python -m benchmarks.scripts.run_local_benchmark
       - run: python -m benchmarks.scripts.run_provider_stub_benchmark
       - run: python -m benchmarks.scripts.generate_provider_benchmark_template
