@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added reproducible cost-per-1k-pages report template and generator.
 - Added provider evaluation report template and raw CSV to Markdown report
   generator.
 - Added opt-in external provider benchmark harness with required environment

@@ -36,6 +36,15 @@ generated report is written to `benchmarks/reports/provider-evaluation-report.md
 The tracked template lives at
 [`../reports/provider-evaluation-report-template.md`](../reports/provider-evaluation-report-template.md).
 
+Cost per 1k pages report:
+
+```bash
+python -m benchmarks.scripts.generate_cost_per_1k_report
+```
+
+This writes raw assumptions to `benchmarks/raw/cost_per_1k_pages.csv` and a
+readable report to `benchmarks/reports/cost-per-1k-pages.md`.
+
 Opt-in external provider benchmark harness:
 
 ```bash
