@@ -80,7 +80,7 @@ python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fi
 
 | Workflow | Command | Output |
 |---|---|---|
-| Docs to RAG | `python -m prodkit_browser.jobs.docs_to_rag --fixture benchmarks/fixtures/docs_pages.json` | Normalized records and HTML artifacts |
+| Docs to RAG | `python -m prodkit_browser.jobs.docs_to_rag --fixture benchmarks/fixtures/docs_pages.json` | Normalized records, document chunks, and HTML artifacts |
 | E-commerce price monitor | `python -m prodkit_browser.jobs.ecommerce_price_monitor --fixture benchmarks/fixtures/ecommerce_pages.json` | Price-change events and selector drift report |
 | Playwright production debugger | `python -m prodkit_browser.jobs.playwright_production_debugger --fixture benchmarks/fixtures/browser_debug_pages.json` | Screenshot artifacts, failure reasons, and benchmark CSV |
 | Playwright selector drift | `python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fixtures/ecommerce_pages.json` | Screenshots, HTML, metrics, and drift report |
@@ -144,6 +144,7 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 
 - Local fixture track
 - [Crawlee Python track](docs/crawlee-python-track.md)
+- [Docs-to-RAG chunk schema](docs/docs-to-rag-chunk-schema.md)
 - Playwright browser track
 - [Provider adapters](docs/provider-adapters.md)
 - [Compliance boundaries](docs/compliance-boundaries.md)
@@ -151,7 +152,7 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 
 ## Included Examples
 
-- `examples/docs-to-rag`: crawl public documentation-style pages and emit normalized records.
+- `examples/docs-to-rag`: crawl public documentation-style pages and emit normalized records plus document chunks.
 - `examples/ecommerce-price-monitor`: monitor fixture product pages, emit price changes, and report selector drift.
 - `examples/playwright-production-debugger`: run normal, selector drift, timeout, and network error pages through Chromium and preserve debugging artifacts.
 - `examples/playwright-selector-drift`: open fixture pages in Chromium, capture screenshots on selector drift, and report browser-run metrics.

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added deterministic docs-to-RAG document chunk output and schema docs.
+
 ## v0.3.2 - Workflow Lab Polish
 
 - Updated CI evidence, stale docs, environment template, and workflow lab model.
