@@ -178,6 +178,7 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 - [Scheduled worker deployment](production/deployment.md)
 - [Observability](production/observability.md)
 - [Cost control](production/cost-control.md)
+- [Local-first RAG ingestion](production/rag-ingestion.md)
 - [Provider options](production/providers.md)
 - [Provider comparison](production/provider-comparison.md)
 - [Provider evaluation report template](reports/provider-evaluation-report-template.md)

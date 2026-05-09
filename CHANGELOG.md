@@ -6,6 +6,7 @@
 - Added a local retrieval benchmark scaffold for docs-to-RAG fixture chunks.
 - Added shared-schema Crawlee docs-to-RAG chunks with crawl metadata sidecar output.
 - Added a docs-to-RAG ingestion success and cost-input report.
+- Added local-first RAG ingestion production documentation.
 
 ## v0.3.2 - Workflow Lab Polish
 

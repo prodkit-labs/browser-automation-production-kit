@@ -103,3 +103,6 @@ This runs the local docs-to-RAG fixture ingestion path, writes raw rows to
 attempted, pages succeeded, pages failed, bytes fetched, chunks produced,
 retries, runtime, and artifact size. Future provider-backed rows stay labeled
 `not tested` until raw benchmark data exists.
+
+Run the full local-first sequence in
+[`../production/rag-ingestion.md`](../production/rag-ingestion.md).

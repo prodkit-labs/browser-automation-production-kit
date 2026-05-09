@@ -23,6 +23,9 @@ The raw ingestion rows are written to
 `benchmarks/raw/ingestion_success_cost.csv`. The generated report is written to
 `benchmarks/reports/ingestion-success-cost.md`.
 
+For the full docs-to-RAG command sequence, use
+[`Local-first RAG ingestion`](rag-ingestion.md).
+
 Control points:
 
 - set retry budgets per job

@@ -47,3 +47,6 @@ Crawlee runs use the same chunk fields in
 `artifacts/crawlee-docs-to-rag/chunks.jsonl`. Crawl-specific details are written
 to `artifacts/crawlee-docs-to-rag/chunk_metadata.json` as a sidecar keyed by
 `chunk_id`.
+
+For the full local pipeline from fixture pages to retrieval and cost-input
+reports, see [`Local-first RAG ingestion`](../production/rag-ingestion.md).

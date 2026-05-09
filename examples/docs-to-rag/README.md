@@ -37,3 +37,4 @@ Production notes:
 Schema:
 
 - [`../../docs/docs-to-rag-chunk-schema.md`](../../docs/docs-to-rag-chunk-schema.md)
+- [`../../production/rag-ingestion.md`](../../production/rag-ingestion.md)
