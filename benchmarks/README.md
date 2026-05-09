@@ -90,3 +90,16 @@ Tracked metrics:
 - `retrieval_hit_rate`
 
 Provider comparison pages should label every number as `measured`, `estimated`, or `not tested`.
+
+Ingestion success and cost report:
+
+```bash
+python -m benchmarks.scripts.generate_ingestion_success_report
+```
+
+This runs the local docs-to-RAG fixture ingestion path, writes raw rows to
+`benchmarks/raw/ingestion_success_cost.csv`, and writes a Markdown report to
+`benchmarks/reports/ingestion-success-cost.md`. The report records pages
+attempted, pages succeeded, pages failed, bytes fetched, chunks produced,
+retries, runtime, and artifact size. Future provider-backed rows stay labeled
+`not tested` until raw benchmark data exists.

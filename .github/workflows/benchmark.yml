@@ -46,6 +46,7 @@ jobs:
       - run: python -m benchmarks.scripts.generate_provider_evaluation_report
       - run: python -m benchmarks.scripts.generate_cost_per_1k_report
       - run: python -m benchmarks.scripts.run_retrieval_benchmark
+      - run: python -m benchmarks.scripts.generate_ingestion_success_report
       - run: docker build -f infra/docker/Dockerfile .
       - uses: actions/upload-artifact@v4
         with:

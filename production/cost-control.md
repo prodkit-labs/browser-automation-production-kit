@@ -13,11 +13,22 @@ The generated report is written to `benchmarks/reports/cost-per-1k-pages.md`.
 The tracked template is available at
 [`reports/cost-per-1k-pages-template.md`](../reports/cost-per-1k-pages-template.md).
 
+For docs-to-RAG ingestion runs, generate the success and cost-input report:
+
+```bash
+python -m benchmarks.scripts.generate_ingestion_success_report
+```
+
+The raw ingestion rows are written to
+`benchmarks/raw/ingestion_success_cost.csv`. The generated report is written to
+`benchmarks/reports/ingestion-success-cost.md`.
+
 Control points:
 
 - set retry budgets per job
 - record bytes and artifact volume
 - separate fixture, local, and provider-backed runs
+- check ingestion success rate before scaling page volume
 - estimate cost per 1k pages
 - stop jobs when block rate crosses a threshold
 - compare providers with raw benchmark data
