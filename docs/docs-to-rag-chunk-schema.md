@@ -42,3 +42,8 @@ an embeddings API, vector database, or hosted browser provider.
 This schema is intentionally provider-neutral. Add embeddings, vector stores,
 or hosted browser execution behind later adapters after the local fixture output
 is reproducible.
+
+Crawlee runs use the same chunk fields in
+`artifacts/crawlee-docs-to-rag/chunks.jsonl`. Crawl-specific details are written
+to `artifacts/crawlee-docs-to-rag/chunk_metadata.json` as a sidecar keyed by
+`chunk_id`.

@@ -17,6 +17,25 @@ The Crawlee job:
 - runs `BeautifulSoupCrawler` against fixture URLs
 - stores Crawlee dataset output under `artifacts/crawlee-storage/`
 - writes normalized records to `artifacts/crawlee-docs-to-rag/records.json`
+- writes shared-schema chunks to `artifacts/crawlee-docs-to-rag/chunks.jsonl`
+- writes crawl metadata to `artifacts/crawlee-docs-to-rag/chunk_metadata.json`
+
+Use the local docs-to-RAG runner when you only need deterministic extraction
+from known HTML fixtures. Use the Crawlee runner when you also want crawler
+runtime behavior, request handling, dataset storage, and crawl metadata while
+keeping the same chunk shape.
+
+Chunk output uses the shared docs-to-RAG schema. Crawlee-specific details stay
+in the metadata sidecar so downstream retrieval code can read the same chunk
+fields from local and Crawlee runs.
+
+Crawlee metadata includes:
+
+- crawl run ID
+- request URL served by the local fixture server
+- response status
+- Crawlee storage path
+- discovered source URL from the original fixture page
 
 How this track fits:
 

@@ -21,6 +21,7 @@ class FixtureHttpServer(AbstractContextManager["FixtureHttpServer"]):
         self._server: ThreadingHTTPServer | None = None
         self._thread: threading.Thread | None = None
         self.urls: list[str] = []
+        self.source_urls: dict[str, str] = {}
 
     def __enter__(self) -> "FixtureHttpServer":
         root = Path(self._tmpdir.name)
@@ -41,6 +42,17 @@ class FixtureHttpServer(AbstractContextManager["FixtureHttpServer"]):
         self._server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
         host, port = self._server.server_address
         self.urls = [f"http://{host}:{port}/{path.name}" for path in sorted(root.glob("*.html"))]
+        pages_by_file = {
+            f"{index:03d}-{(page['url'].rstrip('/').split('/')[-1] or f'page-{index}')}.html": page[
+                "url"
+            ]
+            for index, page in enumerate(pages, start=1)
+        }
+        self.source_urls = {
+            url: pages_by_file[url.rsplit("/", 1)[-1]]
+            for url in self.urls
+            if url.rsplit("/", 1)[-1] in pages_by_file
+        }
 
         self._thread = threading.Thread(target=self._server.serve_forever, daemon=True)
         self._thread.start()

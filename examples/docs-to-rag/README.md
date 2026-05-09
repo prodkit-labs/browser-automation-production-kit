@@ -21,6 +21,8 @@ Outputs:
 - `artifacts/docs-to-rag/records.json`
 - `artifacts/docs-to-rag/chunks.jsonl`
 - `artifacts/crawlee-docs-to-rag/records.json`
+- `artifacts/crawlee-docs-to-rag/chunks.jsonl`
+- `artifacts/crawlee-docs-to-rag/chunk_metadata.json`
 - `artifacts/crawlee-storage/`
 
 Production notes:
@@ -28,6 +30,7 @@ Production notes:
 - Start with public documentation pages you are allowed to crawl.
 - Keep raw HTML snapshots for debugging.
 - Keep chunk output deterministic before adding embeddings or vector stores.
+- Keep Crawlee crawl metadata beside chunks instead of changing the shared chunk schema.
 - Track success rate, latency, retries, and bytes written.
 - Move provider access behind adapters when local execution is not enough.
 

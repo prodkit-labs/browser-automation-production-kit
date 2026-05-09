@@ -4,6 +4,7 @@
 
 - Added deterministic docs-to-RAG document chunk output and schema docs.
 - Added a local retrieval benchmark scaffold for docs-to-RAG fixture chunks.
+- Added shared-schema Crawlee docs-to-RAG chunks with crawl metadata sidecar output.
 
 ## v0.3.2 - Workflow Lab Polish
 

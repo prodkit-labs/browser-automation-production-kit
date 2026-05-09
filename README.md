@@ -85,7 +85,7 @@ python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fi
 | E-commerce price monitor | `python -m prodkit_browser.jobs.ecommerce_price_monitor --fixture benchmarks/fixtures/ecommerce_pages.json` | Price-change events and selector drift report |
 | Playwright production debugger | `python -m prodkit_browser.jobs.playwright_production_debugger --fixture benchmarks/fixtures/browser_debug_pages.json` | Screenshot artifacts, failure reasons, and benchmark CSV |
 | Playwright selector drift | `python -m prodkit_browser.jobs.playwright_selector_drift --fixture benchmarks/fixtures/ecommerce_pages.json` | Screenshots, HTML, metrics, and drift report |
-| Crawlee Python fixture run | `python -m prodkit_browser.jobs.crawlee_docs_to_rag --fixture benchmarks/fixtures/docs_pages.json` | Crawlee dataset plus normalized records |
+| Crawlee Python fixture run | `python -m prodkit_browser.jobs.crawlee_docs_to_rag --fixture benchmarks/fixtures/docs_pages.json` | Crawlee dataset, normalized records, document chunks, and crawl metadata |
 | Local benchmark | `python -m benchmarks.scripts.run_local_benchmark` | Raw CSV and summary metrics |
 | Provider scaffold benchmark | `python -m benchmarks.scripts.run_provider_stub_benchmark` | Provider comparison scaffold with evidence labels |
 | Provider benchmark template | `python -m benchmarks.scripts.generate_provider_benchmark_template` | Candidate provider rows without affiliate URLs |
