@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v0.3.2 - Workflow Lab Polish
+
 - Updated CI evidence, stale docs, environment template, and workflow lab model.
 
 ## v0.3.1 - Metrics and Runtime Hardening
