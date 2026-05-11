@@ -69,11 +69,13 @@ def test_external_benchmark_writes_raw_csv_when_env_is_present(tmp_path) -> None
     assert result["provider"] == "example-external-provider"
     assert result["run_evidence"] == "measured"
     assert result["provider_candidate_evidence"] == "not tested"
+    assert result["measured_at"]
+    assert result["fixture_mode"] == "hosted browser runtime"
     assert result["summary"]["success_rate"] == 1.0
     assert result["summary"]["cost_per_1k_requests_usd"] == 2
     assert result["summary"]["cost_per_1k_successful_pages_usd"] == 2
     assert output.read_text(encoding="utf-8").startswith(
-        "run_evidence,provider_candidate_evidence,provider,category"
+        "run_evidence,provider_candidate_evidence,evidence_status,measured_at"
     )
 
 

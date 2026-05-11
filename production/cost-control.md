@@ -12,6 +12,11 @@ The raw assumptions are written to `benchmarks/raw/cost_per_1k_pages.csv`.
 The generated report is written to `benchmarks/reports/cost-per-1k-pages.md`.
 The tracked template is available at
 [`reports/cost-per-1k-pages-template.md`](../reports/cost-per-1k-pages-template.md).
+Use the editable worksheet at
+[`reports/cost-assumption-worksheet.md`](../reports/cost-assumption-worksheet.md)
+before comparing local, proxy-backed, scraping API, or managed browser paths.
+For a concrete workflow, see
+[`E-Commerce Price Monitor Production Decision Notes`](ecommerce-price-monitor-decision.md).
 
 For docs-to-RAG ingestion runs, generate the success and cost-input report:
 

@@ -61,6 +61,10 @@ Each public provider evaluation should record:
 - evidence label: `measured`, `estimated`, or `not tested`
 - disclosure status for public provider links
 
+Use the boundary checklist before adding or promoting a provider path:
+
+- [`Provider boundary review checklist`](provider-boundary-checklist.md)
+
 External provider benchmarks must be opt-in. They should run only when the
 adapter path is passed explicitly and required provider environment variables
 are present.

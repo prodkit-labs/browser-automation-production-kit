@@ -34,3 +34,7 @@ Production requirements:
 - retry budget
 - price-change event output
 - provider comparison only after benchmark evidence exists
+
+Production decision note:
+
+- [`production/ecommerce-price-monitor-decision.md`](../../production/ecommerce-price-monitor-decision.md)

@@ -34,6 +34,10 @@ def test_provider_evaluation_report_summarizes_raw_csv(tmp_path) -> None:
     assert rows[0].provider == "local-fixture"
     assert rows[0].category == "local/open-source baseline"
     assert rows[0].evidence == "measured"
+    assert rows[0].evidence_status == "measured"
+    assert rows[0].measured_at == "not recorded"
+    assert rows[0].fixture_mode == "not recorded"
+    assert rows[0].source_note == "not recorded"
     assert rows[0].runs == 2
     assert rows[0].success_rate == 0.5
     assert rows[0].p95_latency_ms == 30
@@ -62,12 +66,15 @@ def test_provider_evaluation_report_contains_required_policy_sections(tmp_path) 
     assert "## Disclosure Checklist" in report
     assert "## Fixture Scope" in report
     assert "## Credentials And Rate Limits" in report
+    assert "## Evidence Freshness Labels" in report
     assert "## Summary Metrics" in report
     assert "## Category Tradeoffs" in report
     assert "Cost per 1k requests" in report
     assert "Cost per 1k successful pages" in report
     assert "Artifact support" in report
     assert "Failure classification" in report
+    assert "Measured at" in report
+    assert "Fixture mode" in report
     assert "affiliate relationship is disclosed" in report
     assert "https://www.scraperapi.com" not in report
     assert "best provider" not in report.lower()
@@ -91,4 +98,26 @@ def test_provider_evaluation_report_reads_external_run_metadata(tmp_path) -> Non
     assert rows[0].provider == "example-external-provider"
     assert rows[0].category == "managed browser API"
     assert rows[0].evidence == "measured"
+    assert rows[0].evidence_status == "measured"
+    assert rows[0].fixture_mode == "hosted browser runtime"
+    assert rows[0].source_note == "reviewed public URL fixture"
     assert rows[0].cost_per_1k_successful_pages_usd == 10
+
+
+def test_provider_evaluation_report_reads_freshness_metadata(tmp_path) -> None:
+    raw_csv = tmp_path / "fresh_results.csv"
+    raw_csv.write_text(
+        "evidence,evidence_status,measured_at,fixture_mode,source_note,"
+        "provider,url,ok,latency_ms,status_code,bytes_out,cost_usd,error\n"
+        "estimated,estimated,2026-05-11T00:00:00+00:00,mock managed provider,"
+        "deterministic mock,example-provider,https://example.test/a,true,100,200,1000,0.01,\n",
+        encoding="utf-8",
+    )
+
+    rows = summarize_raw_csv(raw_csv)
+
+    assert rows[0].evidence == "estimated"
+    assert rows[0].evidence_status == "estimated"
+    assert rows[0].measured_at == "2026-05-11T00:00:00+00:00"
+    assert rows[0].fixture_mode == "mock managed provider"
+    assert rows[0].source_note == "deterministic mock"

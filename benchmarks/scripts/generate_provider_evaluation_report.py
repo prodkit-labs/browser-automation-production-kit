@@ -14,6 +14,10 @@ class ProviderReportRow:
     provider: str
     category: str
     evidence: str
+    evidence_status: str
+    measured_at: str
+    fixture_mode: str
+    source_note: str
     runs: int
     success_rate: float
     p95_latency_ms: float
@@ -65,6 +69,10 @@ def summarize_raw_csv(raw_csv: Path) -> list[ProviderReportRow]:
         runs = len(rows)
         successes = sum(1 for row in rows if _as_bool(row["ok"]))
         evidence = rows[0].get("run_evidence") or rows[0].get("evidence", "not tested")
+        evidence_status = rows[0].get("evidence_status") or evidence
+        measured_at = rows[0].get("measured_at") or "not recorded"
+        fixture_mode = rows[0].get("fixture_mode") or rows[0].get("execution_mode") or "not recorded"
+        source_note = rows[0].get("source_note") or rows[0].get("fixture_scope") or "not recorded"
         category = rows[0].get("category") or DEFAULT_CATEGORIES.get(provider, "needs category")
         latencies = [_as_float(row.get("latency_ms")) for row in rows]
         costs = [_as_float(row.get("cost_usd")) for row in rows]
@@ -78,6 +86,10 @@ def summarize_raw_csv(raw_csv: Path) -> list[ProviderReportRow]:
                 provider=provider,
                 category=category,
                 evidence=evidence,
+                evidence_status=evidence_status,
+                measured_at=measured_at,
+                fixture_mode=fixture_mode,
+                source_note=source_note,
                 runs=runs,
                 success_rate=round(successes / runs, 4) if runs else 0.0,
                 p95_latency_ms=percentile_95(latencies),
@@ -101,7 +113,8 @@ def render_report(
     workflow: str,
 ) -> str:
     metric_rows = "\n".join(
-        "| {provider} | {category} | {evidence} | {runs} | {success_rate:.4f} | "
+        "| {provider} | {category} | {evidence} | {evidence_status} | {measured_at} | "
+        "{fixture_mode} | {source_note} | {runs} | {success_rate:.4f} | "
         "{p95_latency_ms:.2f} ms | ${cost_per_1k_requests_usd:.4f} | "
         "${cost_per_1k_successful_pages_usd:.4f} | {artifact_support} | {failure_classification} |".format(
             **row.__dict__
@@ -110,7 +123,8 @@ def render_report(
     )
     if not metric_rows:
         metric_rows = (
-            "| no rows | needs category | not tested | 0 | 0.0000 | 0.00 ms | "
+            "| no rows | needs category | not tested | not tested | not recorded | "
+            "not recorded | not recorded | 0 | 0.0000 | 0.00 ms | "
             "$0.0000 | $0.0000 | none | none |"
         )
 
@@ -159,10 +173,22 @@ shows a production reason to evaluate paid provider options.
 | Retry budget | Document configured retries. |
 | Timeout | Document configured timeout. |
 
+## Evidence Freshness Labels
+
+- `evidence`: broad evidence label used by older report rows.
+- `evidence_status`: current run status, such as `measured`, `estimated`, or
+  `not tested`.
+- `measured_at`: when the raw benchmark row was generated. `not recorded` means
+  the row came from an older CSV schema.
+- `fixture_mode`: local fixture, local browser, hosted runtime, or candidate-only
+  mode used for the row.
+- `source_note`: short context for the evidence source. Treat candidate-only and
+  not-tested rows as planning rows, not recommendations.
+
 ## Summary Metrics
 
-| Provider | Category | Evidence | Runs | Success rate | p95 latency | Cost per 1k requests | Cost per 1k successful pages | Artifact support | Failure classification |
-|---|---|---|---:|---:|---:|---:|---:|---|---|
+| Provider | Category | Evidence | Evidence status | Measured at | Fixture mode | Source note | Runs | Success rate | p95 latency | Cost per 1k requests | Cost per 1k successful pages | Artifact support | Failure classification |
+|---|---|---|---|---|---|---|---:|---:|---:|---:|---:|---|---|
 {metric_rows}
 
 ## Category Tradeoffs

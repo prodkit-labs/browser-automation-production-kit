@@ -14,5 +14,8 @@ def test_provider_benchmark_template_includes_scraperapi_without_links(tmp_path)
     assert scraperapi
     assert scraperapi[0]["category"] == "scraping API"
     assert scraperapi[0]["evidence"] == "not tested"
+    assert scraperapi[0]["evidence_status"] == "not tested"
+    assert scraperapi[0]["fixture_mode"] == "candidate only"
+    assert "measured raw data" in scraperapi[0]["source_note"]
     assert "affiliate link" in scraperapi[0]["public_link_policy"]
     assert "http" not in "\n".join(row["public_link_policy"] for row in rows)

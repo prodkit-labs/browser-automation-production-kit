@@ -22,6 +22,16 @@ class CostScenario:
     debugging_hour_cost_usd: float
 
     @property
+    def attempted_pages(self) -> int:
+        return self.successful_pages + self.retries
+
+    @property
+    def retry_rate(self) -> float:
+        if self.successful_pages <= 0:
+            return 0.0
+        return round(self.retries / self.successful_pages, 4)
+
+    @property
     def total_cost_usd(self) -> float:
         storage_gb = self.artifact_storage_mb / 1024
         return round(
@@ -103,7 +113,9 @@ CSV_FIELDS = [
     "scenario",
     "evidence",
     "successful_pages",
+    "attempted_pages",
     "retries",
+    "retry_rate",
     "browser_minutes",
     "provider_calls",
     "artifact_storage_mb",
@@ -129,7 +141,9 @@ def write_raw_cost_model(output: Path, scenarios: list[CostScenario] | None = No
                     "scenario": row.scenario,
                     "evidence": row.evidence,
                     "successful_pages": row.successful_pages,
+                    "attempted_pages": row.attempted_pages,
                     "retries": row.retries,
+                    "retry_rate": row.retry_rate,
                     "browser_minutes": row.browser_minutes,
                     "provider_calls": row.provider_calls,
                     "artifact_storage_mb": row.artifact_storage_mb,
@@ -147,13 +161,16 @@ def write_raw_cost_model(output: Path, scenarios: list[CostScenario] | None = No
 
 def render_report(raw_csv: Path, scenarios: list[CostScenario]) -> str:
     table_rows = "\n".join(
-        "| {scenario} | {evidence} | {successful_pages} | {retries} | "
-        "{browser_minutes:.2f} | {provider_calls} | {artifact_storage_mb:.2f} | "
-        "{debugging_minutes:.2f} | ${total_cost_usd:.4f} | ${cost_per_1k_pages_usd:.4f} |".format(
+        "| {scenario} | {evidence} | {successful_pages} | {attempted_pages} | "
+        "{retries} | {retry_rate:.4f} | {browser_minutes:.2f} | {provider_calls} | "
+        "{artifact_storage_mb:.2f} | {debugging_minutes:.2f} | ${total_cost_usd:.4f} | "
+        "${cost_per_1k_pages_usd:.4f} |".format(
             scenario=row.scenario,
             evidence=row.evidence,
             successful_pages=row.successful_pages,
+            attempted_pages=row.attempted_pages,
             retries=row.retries,
+            retry_rate=row.retry_rate,
             browser_minutes=row.browser_minutes,
             provider_calls=row.provider_calls,
             artifact_storage_mb=row.artifact_storage_mb,
@@ -183,6 +200,7 @@ Raw assumptions are written to:
 
 | Input | Why it matters | Cost-control lever |
 |---|---|---|
+| Attempted pages | Providers may bill attempted pages, not only successful pages | Track retries separately from successful pages |
 | Retries | Retried pages can multiply browser and provider usage | Classify failures before retrying |
 | Browser minutes | Browser runtime can become the main operating cost | Reduce waits and keep fixture tests fast |
 | Proxy/API calls | Provider-backed paths may charge per call or usage unit | Avoid re-fetching stable pages |
@@ -191,9 +209,24 @@ Raw assumptions are written to:
 
 ## Cost Summary
 
-| Scenario | Evidence | Successful pages | Retries | Browser minutes | Provider calls | Artifact MB | Debugging minutes | Total cost | Cost per 1k pages |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Scenario | Evidence | Successful pages | Attempted pages | Retries | Retry rate | Browser minutes | Provider calls | Artifact MB | Debugging minutes | Total cost | Cost per 1k pages |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 {table_rows}
+
+## Formula
+
+```text
+attempted_pages = successful_pages + retries
+retry_rate = retries / successful_pages
+
+total_cost =
+  browser_minutes * browser_minute_cost_usd
+  + provider_calls * provider_call_cost_usd
+  + artifact_storage_gb * artifact_storage_gb_month_cost_usd
+  + debugging_hours * debugging_hour_cost_usd
+
+cost_per_1k_pages = total_cost / successful_pages * 1000
+```
 
 ## Spend Reduction Checklist
 

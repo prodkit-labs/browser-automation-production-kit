@@ -1,5 +1,20 @@
 # Changelog
 
+## Unreleased
+
+- Added evidence freshness metadata to provider benchmark template, provider
+  stub benchmark output, external provider benchmark output, and provider
+  evaluation reports.
+- Added a browser automation cost assumption worksheet and included attempted
+  pages plus retry rate in the cost model.
+- Added e-commerce price monitor production decision notes for local,
+  proxy-backed, scraping API, and managed browser paths.
+- Added a vendor-neutral provider boundary review checklist before public
+  provider promotion.
+- Added README production decision next steps that link to cost, scenario, and
+  provider-boundary docs without provider links.
+- Added a public traffic snapshot template for short-window GitHub repo signals.
+
 ## v0.4.1 - Evidence, Cost, and Artifact Hardening
 
 - Split external provider benchmark run evidence from provider candidate evidence.

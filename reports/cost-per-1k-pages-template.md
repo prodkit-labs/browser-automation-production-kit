@@ -23,7 +23,9 @@ Local/open-source execution should stay documented before paid provider options.
 | `scenario` | Local fixture, local browser, mock managed browser, or future provider-backed run |
 | `evidence` | `measured`, `estimated`, or `not tested` |
 | `successful_pages` | Count of pages that produced usable output |
+| `attempted_pages` | `successful_pages + retries`; useful when providers bill attempts |
 | `retries` | Retry attempts included in the cost model |
+| `retry_rate` | `retries / successful_pages`; use `0` when no pages succeeded |
 | `browser_minutes` | Browser runtime minutes included in the model |
 | `provider_calls` | Proxy/API/provider calls included in the model |
 | `artifact_storage_mb` | Stored artifact volume in MB |
@@ -33,9 +35,24 @@ Local/open-source execution should stay documented before paid provider options.
 
 ## Cost Summary
 
-| Scenario | Evidence | Successful pages | Retries | Browser minutes | Provider calls | Artifact MB | Debugging minutes | Total cost | Cost per 1k pages |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| `<scenario>` | `<evidence>` | `<count>` | `<count>` | `<minutes>` | `<count>` | `<mb>` | `<minutes>` | `<usd>` | `<usd>` |
+| Scenario | Evidence | Successful pages | Attempted pages | Retries | Retry rate | Browser minutes | Provider calls | Artifact MB | Debugging minutes | Total cost | Cost per 1k pages |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `<scenario>` | `<evidence>` | `<count>` | `<count>` | `<count>` | `<rate>` | `<minutes>` | `<count>` | `<mb>` | `<minutes>` | `<usd>` | `<usd>` |
+
+## Formula
+
+```text
+attempted_pages = successful_pages + retries
+retry_rate = retries / successful_pages
+
+total_cost =
+  browser_minutes * browser_minute_cost_usd
+  + provider_calls * provider_call_cost_usd
+  + artifact_storage_gb * artifact_storage_gb_month_cost_usd
+  + debugging_hours * debugging_hour_cost_usd
+
+cost_per_1k_pages = total_cost / successful_pages * 1000
+```
 
 ## Cost Reduction Notes
 
@@ -58,4 +75,3 @@ Write scenario-specific notes:
 - Which artifacts are worth keeping:
 - Which local/open-source path remains enough:
 - Which provider-backed path needs more benchmark evidence:
-

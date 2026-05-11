@@ -153,6 +153,7 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 - [Provider adapters](docs/provider-adapters.md)
 - [Compliance boundaries](docs/compliance-boundaries.md)
 - [Workflow lab model](docs/workflow-lab-model.md)
+- [Traffic snapshot template](docs/traffic-snapshot-template.md)
 
 ## Included Examples
 
@@ -173,6 +174,18 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 | Scraping API | Commodity extraction | Less control | Success rate, latency | When speed matters |
 | SERP API | Search result monitoring | Review site/API terms first | Quota, cost, freshness | When SERP is core data |
 
+## Production Decision Next Steps
+
+After the local workflow runs, use these notes to decide what needs production
+evidence before changing execution paths:
+
+- [Cost assumption worksheet](reports/cost-assumption-worksheet.md)
+- [E-commerce price monitor decision notes](production/ecommerce-price-monitor-decision.md)
+- [Provider boundary review checklist](production/provider-boundary-checklist.md)
+
+These pages keep the local path documented and separate measured, estimated,
+and not-tested provider evidence.
+
 ## Production Guides
 
 - [Scheduled worker deployment](production/deployment.md)
@@ -183,6 +196,7 @@ Browser, Crawlee, and provider-backed tracks share the same shape: clear inputs,
 - [Provider comparison](production/provider-comparison.md)
 - [Provider evaluation report template](reports/provider-evaluation-report-template.md)
 - [Cost per 1k pages report template](reports/cost-per-1k-pages-template.md)
+- [Cost assumption worksheet](reports/cost-assumption-worksheet.md)
 - [Disclosure policy](production/disclosure.md)
 
 ## Non-Goals

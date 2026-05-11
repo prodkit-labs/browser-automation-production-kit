@@ -6,6 +6,7 @@ import importlib
 import json
 import os
 from collections.abc import Mapping
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -55,6 +56,10 @@ def _metadata_for(adapter_class: type[ProviderAdapter]) -> ProviderAdapterMetada
     return metadata
 
 
+def _measured_at() -> str:
+    return datetime.now(UTC).replace(microsecond=0).isoformat()
+
+
 def _write_rows(
     output: Path,
     *,
@@ -63,14 +68,20 @@ def _write_rows(
     rows: list,
     fixture_scope: str,
     runtime_config: ProviderRuntimeConfig,
-) -> None:
+) -> str:
     output.parent.mkdir(parents=True, exist_ok=True)
+    measured_at = _measured_at()
+    source_note = "; ".join(metadata.notes)
     with output.open("w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(
             [
                 "run_evidence",
                 "provider_candidate_evidence",
+                "evidence_status",
+                "measured_at",
+                "fixture_mode",
+                "source_note",
                 "provider",
                 "category",
                 "execution_mode",
@@ -94,6 +105,10 @@ def _write_rows(
                 [
                     run_evidence,
                     metadata.evidence,
+                    run_evidence,
+                    measured_at,
+                    metadata.execution_mode,
+                    source_note,
                     row.provider,
                     metadata.category,
                     metadata.execution_mode,
@@ -112,6 +127,7 @@ def _write_rows(
                     bool(runtime_config.session_id),
                 ]
             )
+    return measured_at
 
 
 def run_external_benchmark(
@@ -145,7 +161,7 @@ def run_external_benchmark(
     summary = summarize(rows)
     summary["cost_per_1k_requests_usd"] = cost_per_1k_requests(rows)
     summary["cost_per_1k_successful_pages_usd"] = cost_per_1k_successful_pages(rows)
-    _write_rows(
+    measured_at = _write_rows(
         output,
         run_evidence=run_evidence,
         metadata=metadata,
@@ -158,6 +174,8 @@ def run_external_benchmark(
         "provider": metadata.name,
         "run_evidence": run_evidence,
         "provider_candidate_evidence": metadata.evidence,
+        "measured_at": measured_at,
+        "fixture_mode": metadata.execution_mode,
         "summary": summary,
         "raw_csv": str(output),
     }
